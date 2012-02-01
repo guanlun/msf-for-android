@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="fill_parent"
+	android:layout_height="wrap_content"
+	android:paddingRight="10dip"
+	android:background="#ffffff">
+	<ImageView
+		android:id="@+id/videoThumbImg"
+		android:layout_height="80sp"
+		android:layout_width="100sp"
+		android:layout_alignParentLeft="true"/>
+	<ProgressBar
+		android:id="@+id/video_progress"
+		style="?android:attr/progressBarStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+	<LinearLayout
+		android:orientation="vertical"
+		android:layout_width="fill_parent"
+		android:layout_height="wrap_content"
+		android:layout_toRightOf="@+id/videoThumbImg"
+		android:layout_centerVertical="true"
+		android:layout_margin="10sp"
+		android:paddingRight="10sp">
+		<TextView
+			android:id = "@+id/video_title"
+			android:layout_width = "fill_parent"
+			android:layout_height = "wrap_content"
+			android:textColor = "#000000"
+			android:textSize = "7pt"/>
+		<TextView
+			android:id = "@+id/video_date"
+			android:layout_width = "fill_parent"
+			android:layout_height = "wrap_content"
+			android:textColor = "#ee0000"
+			android:textSize = "6pt"/>
+	</LinearLayout>
+	<ImageView
+		android:id = "@+id/videoVisited"
+		android:layout_width = "15sp"
+		android:layout_height = "15sp"
+		android:scaleType="fitCenter"
+  		android:layout_centerVertical="true"
+  		android:layout_alignParentRight="true"
+  		android:src = "@drawable/arrow"/>
+</RelativeLayout>

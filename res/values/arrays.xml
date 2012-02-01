@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="NewsRSSFields">
+    	<item>title</item>
+    	<item>link</item>
+    	<item>pubDate</item>
+    	<item>description</item>
+    </string-array>
+    
+    <string-array name="BlogRSSFields"> 
+    	<item>title</item>
+    	<item>link</item>
+    	<item>pubDate</item>
+    	<item>content:encoded</item>
+    	<item>dc:creator</item>
+    </string-array>
+
+    <string-array name="ImageRSSFields">
+    	<item>title</item>
+    	<item>content:encoded</item>
+    	<item>pubDate</item>
+    	<item>description</item>
+    </string-array>
+
+    <string-array name="language_array">
+        <item>English</item>
+        <item>繁體中文</item>
+        <item>简体中文</item>
+    </string-array>
+    
+    <string-array name="language_values">
+        <item>en</item>
+        <item>tc</item>
+        <item>sc</item>
+    </string-array>
+    
+	<string-array name="video_array">
+		<item>YouTube(not available in mainland China)</item>
+		<item>Youku</item>
+	</string-array>
+	
+	<string-array name="video_value">
+		<item>YouTube</item>
+		<item>Youku</item>
+	</string-array>
+</resources>

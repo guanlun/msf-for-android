@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">無國界醫生︰前線隨身</string>
+    
+    <!-- urls -->
+    <string name="msf_newsurl">http://www.msf.org.hk/index.php?rss=yes&amp;lang=tc</string>
+    <string name="msf_blogsurl">http://www.msf.org.hk/blogs/index.php/feed/</string>
+    <string name="msf_imagesurl">http://www.msf.org.hk/photo/?feed=rss2</string>
+    <string name="link_news_url">http://www.msf.org.hk/index.php?option=com_content&amp;view=category&amp;id=37&amp;Itemid=38&amp;lang=tc</string>
+    <string name="link_blogs_url">http://www.msf.org.hk/blogs/</string>
+    <string name="link_images_url">http://www.msf.org.hk/photo/</string>
+    
+    <!-- menu -->
+	<string name="menu_about">關於Android應用</string>
+	<string name="menu_settings">設置</string>
+	<string name="latest_news">最新消息</string>
+	<string name="blogs">Blogs</string>
+	<string name="frontline_vision">前線視界</string>
+	<string name="videos">短片</string>
+	<string name="go_back">返回</string>
+	<string name="refresh">刷新</string>
+	<string name="exit">退出</string>
+	<string name="about_app">無國界醫生Android應用</string>
+	<string name="about_app_content">香港科技大學\n計算機科學及工程學系</string>
+	<string name="click_for_more">更多...</string>
+	<string name="loading">載入中...</string>
+	<string name="open_view">打開</string>
+	<string name="share">分享</string>
+	<string name="tap2share">點擊分享</string>
+
+	<!-- about us -->
+	<string name="about_us">關於我們</string>
+	<string name="charter_title">憲章</string>
+	<string name="charter_short">無國界醫生是一個國際的非政府組織，其成員...</string>
+	<string name="click_to_extend">點擊展開</string>
+	<string name="charter_content0">無國界醫生是一個國際的非政府組織，其成員主要為醫生和其他醫務人員，也歡迎有助於組織完成自身使命的其他專業人員參與。全體成員同意遵循以下準則：</string>
+	<string name="charter_content1">1. 無國界醫生不分種族、宗教、信仰和政治立場，為身處困境的人們以及天災人禍和武裝衝突的受害者提供援助。</string>
+	<string name="charter_content2">2. 無國界醫生遵循國際醫療守則，堅持人道援助的權利，恪守中立和不偏不倚的立場，並要求在其行動中不受任何阻撓。</string>
+	<string name="charter_content3">3. 全體成員嚴格遵循其職業規範，並且完全獨立於任何政治、經濟和宗教勢力之外。</string>
+	<string name="charter_content4">4. 作為志願者，全體成員深諳執行組織的使命所面臨的風險和困難，並且不會要求組織向其本人或受益人作出超乎該組織所能提供的賠償。</string>
+	<string name="contact_us_title">聯絡我們</string>
+	<string name="contact_us_content">電話: (852) 2959 4229 \n\n電郵: office@msf.org.hk</string>
+	<string name="donate">捐助</string>
+	<string name="donate_content1">無國界醫生非常重視救援工作的獨立性，確保工作不受任何政治、宗教、或經濟因素左右，使我們能夠獨立和不偏不倚地提供醫療人道救援。因此，我們致力維持大部分的經費來自私人捐款，主要是像你一樣的個人捐款者。我們堅持將最少八成捐款用於救援項目上。</string>
+	<string name="donate_content2">你的捐款支持讓我們能繼續迅速及獨立地進行救援，為身處危難中的人民提供醫療援助。你可以透過以下途徑，捐款支持無國界醫生的救援工作。</string>
+	<string name="donate_content3">查詢︰(852) 2338 8277 / donation@msf.org.hk</string>
+	<string name="donate_button_text">網上捐款 </string>
+	<string name="work_with_us">參與前線救援</string>
+	<string name="work_with_us_content1">無國界醫生是一個志願組織。每年，我們會派出約二千名不同國籍的志願人員參與全球救援工作，與大約二萬三千名救援項目所在地的員工一同救助生命。救援任務的生活滿是挑戰，但也充滿喜悅。</string>
+	<string name="work_with_us_content2">查詢︰hr@msf.org.hk</string>
+	<string name="work_with_us_button_text">關於參與前線救援</string>
+	<string name="website">主頁</string>
+	<string name="website_button">前往主頁</string>
+	<string name="donate_url">https://ssl.msf.org.hk/edonation/common/landing.js</string>
+	<string name="work_with_us_url">http://m.msf.org.hk/tc/work.php</string>
+	<string name="homepage_url">http://m.msf.org.hk/tc/index.php</string>
+		
+	<!-- preferences -->
+	<string name="language_select">選擇語言</string>
+	<string name="language_summary">Select Language</string>
+	<string name="video_source_select">選擇短片來源</string>
+	<string name="video_source_summary">可選擇YouTube或Youku為短片網站</string>
+</resources>

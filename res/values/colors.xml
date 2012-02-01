@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+	<color name="white">#ffffffff</color>
+	<color name="light">#ffcccccc</color>
+	<color name="dark">#ff999999</color>
+	<color name="black">#ff000000</color>
+	<color name="grey">#ff222222</color>
+	<color name="grey2">#ffe1e1e1</color>
+	<color name="yellow">#ffff00</color>
+	<color name="red">#ffff0000</color>
+	<color name="blue">#ff0055ff</color>
+	<color name="maroon">#ff800000</color>
+	<color name="dodger_blue">#ff157DEC</color>
+	<color name="divider">#ffe0e0e0</color>
+	<color name="phone_number">#ff004db3</color>
+</resources>

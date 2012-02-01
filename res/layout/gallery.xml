@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+	xmlns:android="http://schemas.android.com/apk/res/android" 
+	android:layout_width = "fill_parent"
+	android:layout_height = "fill_parent"
+	android:background = "#000000"
+	android:id = "@+id/mainLayout">
+	<RelativeLayout
+		android:orientation = "vertical"
+		android:layout_width = "fill_parent"
+		android:layout_height = "wrap_content"
+		android:layout_alignParentTop = "true">
+		<Gallery
+		    android:id="@+id/gallery_view"
+		    android:layout_width="fill_parent"
+		    android:layout_height="wrap_content"/>
+			<ViewFlipper
+				android:id = "@+id/gallery_flipper"
+				android:layout_width = "fill_parent"
+				android:layout_height = "wrap_content"
+				android:layout_below="@+id/galleryView">
+			</ViewFlipper>
+	</RelativeLayout>
+</RelativeLayout>

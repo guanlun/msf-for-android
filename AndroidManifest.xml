@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest
+	  xmlns:android="http://schemas.android.com/apk/res/android"
+	  package="hk.org.msf.android"
+	  android:installLocation="auto"
+	  android:versionCode="1"
+	  android:versionName="1.0">
+      <application 
+          android:icon="@drawable/logo_small"
+          android:label="@string/app_name"
+		  android:theme="@android:style/Theme.NoTitleBar">
+        <activity android:name=".ui.SplashScreen"
+                  android:screenOrientation="portrait">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        		
+        <!-- Library -->
+        <activity android:name=".ui.MainTabs" android:screenOrientation="portrait">
+        </activity>
+        <activity android:name=".ui.LibraryCatalogActivity" android:screenOrientation="portrait">
+        </activity>
+        <activity android:name=".ui.BlogList" android:screenOrientation="portrait">
+        </activity>
+        <activity android:name=".ui.NewsList" android:screenOrientation="portrait">
+        </activity>
+        <activity android:name=".ui.AboutUs" android:screenOrientation="portrait">
+        </activity>
+        <activity android:name=".ui.MainMenu" android:screenOrientation="portrait">
+        </activity>
+		<activity android:name=".ui.ImageGrid" android:screenOrientation="portrait">
+        </activity>
+        <activity android:name=".ui.ImageGallery">
+        </activity>
+        <activity android:name=".ui.VideoList">
+        </activity>
+		<activity android:name=".ui.Preferences" android:screenOrientation="portrait">
+		</activity>
+		<activity android:name=".ui.WebViewDisplay" android:configChanges="orientation|keyboardHidden">
+		</activity>
+		<activity android:name=".ui.ImageGallery">
+		</activity>
+
+        <service android:name=".data.DataUpdateService"/>
+        
+    </application>
+    
+    <uses-sdk android:minSdkVersion="8" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+	<uses-permission android:name="andorid.permission.STORAGE"/>
+</manifest> 

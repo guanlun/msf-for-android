@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	android:id="@+id/image_grid_layout"
+	android:layout_width="fill_parent"
+	android:layout_height="fill_parent"
+	android:background="#000000">
+	<GridView
+		android:id="@+id/image_gridview"
+		android:layout_width="fill_parent"
+		android:layout_height="wrap_content"
+		android:layout_marginBottom="40dp"
+		android:columnWidth="100dp"
+		android:numColumns="3"
+		android:verticalSpacing="2dp"
+		android:horizontalSpacing="2dp"
+		android:stretchMode="columnWidth"
+		android:gravity="center"
+		android:listSelector="@drawable/grid_item_selection"/>
+	<Button
+		android:id="@+id/more_images"
+		android:layout_width="fill_parent"
+		android:layout_height="wrap_content"
+		android:padding="5dp"
+		android:gravity="center"
+		android:layout_alignParentBottom="true"
+		android:text="@string/click_for_more"
+		android:textColor="#ffffff"
+		android:background="#000000"/>
+</RelativeLayout>

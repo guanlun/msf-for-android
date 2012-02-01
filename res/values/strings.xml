@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">MSF Go</string>
+    
+    <!-- urls -->
+    <string name="msf_newsurl">http://www.msf.org.hk/index.php?rss=yes&amp;lang=en</string>
+    <string name="msf_blogsurl">http://www.msf.org.hk/blogs/index.php/feed/?lang=en</string>
+    <string name="msf_imagesurl">http://www.msf.org.hk/photo/?feed=rss2&amp;lang=en</string>
+    <string name="youtube_video_url">http://gdata.youtube.com/feeds/api/users/msfhk/uploads</string>
+    <string name="link_news_url">http://www.msf.org.hk/index.php?option=com_content&amp;view=category&amp;id=37&amp;Itemid=38&amp;lang=en</string>
+    <string name="link_blogs_url">http://www.msf.org.hk/blogs/en</string>
+    <string name="link_images_url">http://www.msf.org.hk/photo/en</string>
+    <string name="youtube_site">http://www.youtube.com/user/MSF?blend=1&amp;ob=5</string>
+    <string name="youku_site">http://u.youku.com/user_video/id_UMTQ1NjQ0NTQ0.html</string>
+    
+    <!-- menu -->
+	<string name="menu_about">About Android App</string>
+	<string name="menu_settings">Settings</string>
+	<string name="latest_news">Latest News</string>
+	<string name="blogs">Blogs</string>
+	<string name="frontline_vision">Frontline Vision</string>
+	<string name="videos">Videos</string>
+	<string name="go_back">Back</string>
+	<string name="refresh">Refresh</string>
+	<string name="exit">Quit</string>
+	<string name="about_app">MSF Android App</string>
+	<string name="about_app_content">Department of Computer \nScience and Engineering \nHKUST</string>
+	<string name="click_for_more">More...</string>
+	<string name="loading">Loading...</string>
+	<string name="open_view">Open</string>
+	<string name="share">Share</string>
+	<string name="tap2share">Tap to share</string>
+	
+	<!-- about us -->
+	<string name="about_us">About us</string>
+	<string name="charter_title">Charter</string>
+	<string name="charter_short">Médecins Sans Frontières (MSF) is a private international association. The association...</string>
+	<string name="click_to_extend">Click to extend</string>
+	<string name="charter_content0">Médecins Sans Frontières (MSF) is a private international association. The association is made up mainly of doctors and health sector workers and is also open to all other professions which might help in achieving its aims. All of its members agree to honour the following principles:</string>
+	<string name="charter_content1">1. MSF provides assistance to populations in distress, to victims of natural or man-made disasters and to victims of armed conflict. They do so irrespective of race, religion, creed or political convictions.</string>
+	<string name="charter_content2">2. MSF observes neutrality and impartiality in the name of universal medical ethics and the right to humanitarian assistance and claims full and unhindered freedom in the exercise of its functions.</string>
+	<string name="charter_content3">3. Members undertake to respect their professional code of ethics and to maintain complete independence from all political, economic, or religious powers.</string>
+	<string name="charter_content4">4. As volunteers, members understand the risks and dangers of the missions they carry out and make no claim for themselves or their assigns for any form of compensation other than that which the association might be able to afford them.</string>
+	<string name="contact_us_title">Contact us</string>
+	<string name="contact_us_content">Tel: (852) 2959 4229 \n\nEmail: office@msf.org.hk</string>
+	<string name="donate">Donate</string>
+	<string name="donate_content1">Operational independence from any political, religious, or economic consideration is vital to MSF: it allows us to provide medical relief and assistance in an impartial and independent manner. Hence, MSF strives to maintain a high level of donation income from the private sector, mainly individuals like you. We ensure that at least 80% of the funds are used for relief operations and support.</string>
+	<string name="donate_content2">Your donations free us to act swiftly and independently to help the people most in need. Please tell us that you share our commitment by making a donation today.</string>
+	<string name="donate_content3">Enquiry: (852) 2338 8277 / donation@msf.org.hk</string>
+	<string name="donate_button_text">Online donation</string>
+	<string name="work_with_us">Work with us</string>
+	<string name="work_with_us_content1">MSF is a volunteer organisation. Each year, about 2,000 aid workers of all nationalities leave on MSF field missions to join around 23,000 staff in the countries of humanitarian assistance. Life on a mission is full of challenges, but also full of joy.</string>
+	<string name="work_with_us_content2">Enquiry: hr@msf.org.hk</string>
+	<string name="work_with_us_button_text">More about working with us</string>
+	<string name="website">Our website</string>
+	<string name="website_button">Go to our homepage</string>
+	<string name="donate_url">https://ssl.msf.org.hk/edonation/common/landing.jsp</string>
+	<string name="work_with_us_url">http://m.msf.org.hk/work.php</string>
+	<string name="homepage_url">http://m.msf.org.hk/index.php</string>
+		
+	<!-- preferences -->
+	<string name="language_select">Select Language</string>
+	<string name="language_summary">選擇語言</string>
+	<string name="video_source_select">Select Video Site</string>
+	<string name="video_source_summary">Select YouTube or Youku as video site</string>
+</resources>
