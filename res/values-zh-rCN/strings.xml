@@ -26,9 +26,10 @@
 	<string name="loading">载入中...</string>
 	<string name="open_view">打开</string>
 	<string name="share">分享</string>
-	<string name="tap2share">点击分享</string>
+	<string name="tap2share">分享</string>
 
-	<!-- about us -->
+	<!-- msf -->
+	<string name="msf">无国界医生</string>
 	<string name="about_us">关于我们</string>
 	<string name="charter_title">章程</string>
 	<string name="charter_short">无国界医生是一个国际的非政府组织，其成员...</string>
@@ -40,7 +41,7 @@
 	<string name="charter_content4">4. 作为志愿者，全体成员深谙执行组织的使命所面临的风险和困难，并且不会要求组织向其本人或受益人作出超乎该组织所能提供的赔偿。</string>
 	<string name="contact_us_title">联络我们</string>
 	<string name="contact_us_content">电话: (852) 2959 4229 \n\n电邮: office@msf.org.hk</string>
-	<string name="donate">捐助</string>
+	<string name="donate">捐款</string>
 	<string name="donate_content1">无国界医生非常重视救援工作的独立性，确保工作不受任何政治、宗教、或经济因素左右，使我们能够独立和不偏不倚地提供医疗人道救援。因此，我们致力维持大部分的经费来自私人捐款，主要是像你一样的个人捐款者。我们坚持将最少八成捐款用于救援项目上。</string>
 	<string name="donate_content2">你的捐款支持让我们能继续迅速及独立地进行救援，为身处危难中的人民提供医疗援助。你可以透过以下途径，捐款支持无国界医生的救援工作。</string>
 	<string name="donate_content3">查询︰(852) 2338 8277 / donation@msf.org.hk</string>

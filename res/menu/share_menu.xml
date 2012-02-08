@@ -2,4 +2,8 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item android:id="@+id/share_item"
           android:title="@string/share"/>
+   	<item android:id="@+id/menu_msf"
+          android:title="@string/msf" />
+    <item android:id="@+id/menu_settings"
+          android:title="@string/language_select" />
 </menu>

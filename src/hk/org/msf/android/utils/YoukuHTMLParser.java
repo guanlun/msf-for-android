@@ -14,7 +14,6 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import android.content.Context;
-import android.util.Log;
 
 /**
  * This class is used to parse the html pages on Youku, since it does not provide RSS feeds.

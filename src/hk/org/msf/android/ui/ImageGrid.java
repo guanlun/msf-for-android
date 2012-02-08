@@ -220,9 +220,17 @@ public class ImageGrid extends Activity implements OnItemClickListener, OnItemLo
 	}
 	
 	public void openItem(int position) {
-		if (imageHash.size() > position) {
+		String link = imageEntryList.get(position).url;
+		if (imageHash.get(link) != null) {
+			int realPos = 0;
+			for (int i = 0; i < position; i++) {
+				if (imageHash.get(imageEntryList.get(i).url) != null) {
+					realPos++;
+				}
+			}
             Intent intent = new Intent(ImageGrid.this, ImageGallery.class);
-            intent.putExtra(pic_id, position);
+            intent.putExtra("info_pos", position);
+            intent.putExtra("pic_pos", realPos);
             startActivity(intent);
         }
 	}

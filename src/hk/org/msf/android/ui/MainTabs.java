@@ -1,7 +1,6 @@
 package hk.org.msf.android.ui;
 
 import hk.org.msf.android.R;
-import android.app.Dialog;
 import android.app.TabActivity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -11,7 +10,6 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.Window;
 import android.widget.ImageButton;
 import android.widget.TabHost;
 import android.widget.TabHost.OnTabChangeListener;
@@ -186,21 +184,26 @@ public class MainTabs extends TabActivity implements OnTabChangeListener {
 	
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
-		// Handle item selection
-		switch (item.getItemId()) {
-		case R.id.menu_about:
-			Dialog dialog = new Dialog(this);
-			dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-			dialog.setContentView(R.layout.about_dialog);
-			dialog.show();
-			return true;
-		case R.id.menu_settings:
-			Intent settingsActivity = new Intent(MainTabs.this, Preferences.class);
-			startActivity(settingsActivity);
-			this.finish();
-			return true;
-		default:
-			return super.onOptionsItemSelected(item);
-		}
+        // Handle item selection
+    	Intent intent;
+        switch (item.getItemId()) {
+        case R.id.menu_msf:
+        	/* The following is used before
+            Dialog dialog = new Dialog(this);
+            dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+            dialog.setContentView(R.layout.about_dialog);
+            dialog.show();
+            */
+        	intent = new Intent(MainTabs.this, MSFView.class);
+        	startActivity(intent);
+            return true;
+        case R.id.menu_settings:
+            intent = new Intent(MainTabs.this, Preferences.class);
+            startActivity(intent);
+            this.finish();
+            return true;
+        default:
+            return super.onOptionsItemSelected(item);
+        }
 	}
 }

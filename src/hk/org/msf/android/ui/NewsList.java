@@ -381,58 +381,71 @@ public class NewsList extends Activity implements OnItemClickListener, OnItemLon
 	}
 	
 	public void openItem(final int position) {
-		currentPos = position;
-		
-		LinearLayout webLayout = new LinearLayout(this);
-		webLayout.setOrientation(LinearLayout.VERTICAL);
-		webLayout.setBackgroundColor(Color.WHITE);
-		webLayout.setLayoutParams(
-				new ViewGroup.LayoutParams(
-						ViewGroup.LayoutParams.FILL_PARENT,
-						ViewGroup.LayoutParams.FILL_PARENT));
-
-		webView = new WebView(this);
-
-		WebSettings webSettings = webView.getSettings();
-		
+    	currentPos = position;
+    	
+        LinearLayout webLayout = new LinearLayout(this);
+        webLayout.setOrientation(LinearLayout.VERTICAL);
+        webLayout.setBackgroundColor(Color.WHITE);
+        webLayout.setLayoutParams(
+                new ViewGroup.LayoutParams(
+                        ViewGroup.LayoutParams.FILL_PARENT,
+                        ViewGroup.LayoutParams.FILL_PARENT
+                )
+        );
+        
+        //Display the content of the blog with a WebView:
+        webView = new WebView(this);
+        
+        WebSettings webSettings = webView.getSettings();
+        
         webSettings.setSupportZoom(true);
         webSettings.setJavaScriptEnabled(true);
         webSettings.setBuiltInZoomControls(true);
         webSettings.setDefaultZoom(WebSettings.ZoomDensity.FAR);
+        webSettings.setBlockNetworkImage(false);
+        webSettings.setBlockNetworkLoads(false);
         
-        webView.setLayoutParams(
-        		new ListView.LayoutParams(
-        				ListView.LayoutParams.FILL_PARENT,
-        				ListView.LayoutParams.WRAP_CONTENT
-				)
-		);
+        LinearLayout.LayoutParams webParams = 
+        		new LinearLayout.LayoutParams(
+                		LinearLayout.LayoutParams.FILL_PARENT, 
+                		LinearLayout.LayoutParams.WRAP_CONTENT
+                );
+        webParams.weight = 4.0f;
+        
+        webView.setLayoutParams(webParams);
         
         webView.setWebViewClient(new WebViewClient() {
-        	@Override
-        	 public boolean shouldOverrideUrlLoading(WebView view, String url) {
-        		 view.loadUrl(url);
-        		 return true;
-        	 }
+            @Override
+             public boolean shouldOverrideUrlLoading(WebView view, String url) {
+                 view.loadUrl(url);
+                 return true;
+             }
         });
         webView.setInitialScale(150);
         webView.loadDataWithBaseURL("http://www.msf.org.hk/", 
-        		newsEntryList.get(position).content, "text/html", "UTF-8", null);
+                newsEntryList.get(position).content, "text/html", "UTF-8", null);
         
-        final TextView shareButton = new TextView(this);
-        shareButton.setLayoutParams(
-        		new ListView.LayoutParams(
-        				ListView.LayoutParams.FILL_PARENT,
-        				ListView.LayoutParams.WRAP_CONTENT
-				)
-		);
+        final Button shareButton = new Button(this);
+        
+        LinearLayout.LayoutParams buttonParams = 
+        		new LinearLayout.LayoutParams(
+        				LinearLayout.LayoutParams.FILL_PARENT,
+        				LinearLayout.LayoutParams.WRAP_CONTENT, 
+        				1
+				);
+        buttonParams.height = 30;
+        buttonParams.weight = 0.1f;
+        buttonParams.leftMargin = 50;
+        buttonParams.rightMargin = 50;
+        
+        shareButton.setLayoutParams(buttonParams);
         
         shareButton.setText(this.getApplicationContext().getResources().getString(R.string.tap2share));
-        shareButton.setTextSize(20f);
-        shareButton.setTextColor(Color.rgb(255, 255, 255));
+        shareButton.setTextSize(16);
+        shareButton.setTextColor(Color.rgb(255, 0, 0));
         shareButton.setTypeface(null, Typeface.BOLD);
         shareButton.setGravity(Gravity.CENTER);
-        shareButton.setPadding(0, 6, 0, 6);
-        shareButton.setBackgroundColor(Color.rgb(150, 150, 150));
+        shareButton.getBackground().setAlpha(150);
         shareButton.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
@@ -440,6 +453,7 @@ public class NewsList extends Activity implements OnItemClickListener, OnItemLon
 			}
         });
         
+        /*
 		ListView container = new ListView(this);
         container.setLayoutParams(
         		new ViewFlipper.LayoutParams(
@@ -449,21 +463,14 @@ public class NewsList extends Activity implements OnItemClickListener, OnItemLon
 		);
         
         container.setAdapter(new BaseAdapter() {
-
 			@Override
 			public int getCount() {
-				return 2;
+				return 1;
 			}
 
 			@Override
 			public Object getItem(int position) {
-				if (position == 0) {
-					return webView;
-				} else if (position == 1) {
-					return shareButton;
-				} else {
-					return null;
-				}
+				return position;
 			}
 
 			@Override
@@ -482,13 +489,16 @@ public class NewsList extends Activity implements OnItemClickListener, OnItemLon
 				}
 			}
         });
-
+        */
         
-        webLayout.addView(container);
+        // container.addFooterView(shareButton);
+        
+        webLayout.addView(webView);
+        webLayout.addView(shareButton);
         
         newsFlipper.addView(webLayout);
         newsFlipper.showNext();
-	}
+    }
 
 	@Override
 	public void onBackPressed() {
@@ -535,9 +545,20 @@ public class NewsList extends Activity implements OnItemClickListener, OnItemLon
 	
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
+		Intent intent;
 		switch (item.getItemId()) {
 		case R.id.share_item:
 			shareItem(currentPos);
+			return true;
+        case R.id.menu_msf:
+        	intent = new Intent(NewsList.this, MSFView.class);
+        	startActivity(intent);
+            return true;
+        case R.id.menu_settings:
+            intent = new Intent(NewsList.this, Preferences.class);
+            startActivity(intent);
+            this.finish();
+            return true;
 		default:
 			return super.onOptionsItemSelected(item);
 		}

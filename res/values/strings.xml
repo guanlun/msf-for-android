@@ -29,9 +29,10 @@
 	<string name="loading">Loading...</string>
 	<string name="open_view">Open</string>
 	<string name="share">Share</string>
-	<string name="tap2share">Tap to share</string>
+	<string name="tap2share">SHARE</string>
 	
-	<!-- about us -->
+	<!-- msf -->
+	<string name="msf">MSF</string>
 	<string name="about_us">About us</string>
 	<string name="charter_title">Charter</string>
 	<string name="charter_short">Médecins Sans Frontières (MSF) is a private international association. The association...</string>
@@ -60,7 +61,7 @@
 		
 	<!-- preferences -->
 	<string name="language_select">Select Language</string>
-	<string name="language_summary">選擇語言</string>
+	<string name="language_summary">选择语言</string>
 	<string name="video_source_select">Select Video Site</string>
 	<string name="video_source_summary">Select YouTube or Youku as video site</string>
 </resources>

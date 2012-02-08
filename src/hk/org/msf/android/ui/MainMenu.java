@@ -6,7 +6,6 @@ import hk.org.msf.android.utils.MySettings;
 import java.util.Locale;
 
 import android.app.Activity;
-import android.app.Dialog;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
@@ -56,7 +55,7 @@ public class MainMenu extends Activity implements OnItemClickListener {
                 getApplicationContext().getResources().getString(R.string.blogs),
                 getApplicationContext().getResources().getString(R.string.frontline_vision),
                 getApplicationContext().getResources().getString(R.string.videos),
-                getApplicationContext().getResources().getString(R.string.about_us),
+                getApplicationContext().getResources().getString(R.string.msf),
                 getApplicationContext().getResources().getString(R.string.menu_settings)
         };
         
@@ -160,16 +159,21 @@ public class MainMenu extends Activity implements OnItemClickListener {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle item selection
+    	Intent intent;
         switch (item.getItemId()) {
-        case R.id.menu_about:
+        case R.id.menu_msf:
+        	/* The following is used before
             Dialog dialog = new Dialog(this);
             dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
             dialog.setContentView(R.layout.about_dialog);
             dialog.show();
+            */
+        	intent = new Intent(MainMenu.this, MSFView.class);
+        	startActivity(intent);
             return true;
         case R.id.menu_settings:
-            Intent settingsActivity = new Intent(MainMenu.this, Preferences.class);
-            startActivity(settingsActivity);
+            intent = new Intent(MainMenu.this, Preferences.class);
+            startActivity(intent);
             this.finish();
             return true;
         default:
@@ -203,7 +207,7 @@ public class MainMenu extends Activity implements OnItemClickListener {
             this.startActivity(i);
             break;
         case 4:
-            i = new Intent(MainMenu.this, AboutUs.class);
+            i = new Intent(MainMenu.this, MSFView.class);
             this.startActivity(i);
             break;
         case 5:

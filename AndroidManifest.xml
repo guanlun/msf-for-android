@@ -8,7 +8,8 @@
       <application 
           android:icon="@drawable/logo_small"
           android:label="@string/app_name"
-		  android:theme="@android:style/Theme.NoTitleBar">
+		  android:theme="@android:style/Theme.NoTitleBar"
+		  android:debuggable="true">
         <activity android:name=".ui.SplashScreen"
                   android:screenOrientation="portrait">
             <intent-filter>
@@ -18,30 +19,35 @@
         </activity>
         		
         <!-- Library -->
-        <activity android:name=".ui.MainTabs" android:screenOrientation="portrait">
-        </activity>
-        <activity android:name=".ui.LibraryCatalogActivity" android:screenOrientation="portrait">
-        </activity>
-        <activity android:name=".ui.BlogList" android:screenOrientation="portrait">
-        </activity>
-        <activity android:name=".ui.NewsList" android:screenOrientation="portrait">
-        </activity>
-        <activity android:name=".ui.AboutUs" android:screenOrientation="portrait">
-        </activity>
-        <activity android:name=".ui.MainMenu" android:screenOrientation="portrait">
-        </activity>
-		<activity android:name=".ui.ImageGrid" android:screenOrientation="portrait">
-        </activity>
-        <activity android:name=".ui.ImageGallery">
-        </activity>
-        <activity android:name=".ui.VideoList">
-        </activity>
-		<activity android:name=".ui.Preferences" android:screenOrientation="portrait">
-		</activity>
-		<activity android:name=".ui.WebViewDisplay" android:configChanges="orientation|keyboardHidden">
-		</activity>
-		<activity android:name=".ui.ImageGallery">
-		</activity>
+        <activity android:name=".ui.MainTabs" android:screenOrientation="portrait"></activity>
+        
+        <activity android:name=".ui.LibraryCatalogActivity" android:screenOrientation="portrait"></activity>
+        
+        <activity android:name=".ui.BlogList" android:screenOrientation="portrait"></activity>
+        
+        <activity android:name=".ui.NewsList" android:screenOrientation="portrait"></activity>
+        
+        <activity android:name=".ui.MSFView" android:screenOrientation="portrait"></activity>
+        
+        <activity android:name=".ui.AboutUsView" android:screenOrientation="portrait"></activity>
+        
+        <activity android:name=".ui.DonateView" android:screenOrientation="portrait"></activity>
+        
+        <activity android:name=".ui.WorkWithUsView" android:screenOrientation="portrait"></activity>
+        
+        <activity android:name=".ui.MainMenu" android:screenOrientation="portrait"></activity>
+        
+		<activity android:name=".ui.ImageGrid" android:screenOrientation="portrait"></activity>
+		
+        <activity android:name=".ui.ImageGallery"></activity>
+        
+        <activity android:name=".ui.VideoList"></activity>
+        
+		<activity android:name=".ui.Preferences" android:screenOrientation="portrait"></activity>
+		
+		<activity android:name=".ui.WebViewDisplay" android:configChanges="orientation|keyboardHidden"></activity>
+		
+		<activity android:name=".ui.ImageGallery"></activity>
 
         <service android:name=".data.DataUpdateService"/>
         

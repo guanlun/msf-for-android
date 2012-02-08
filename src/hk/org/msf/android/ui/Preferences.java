@@ -4,10 +4,6 @@ import hk.org.msf.android.R;
 import android.content.Intent;
 import android.os.Bundle;
 import android.preference.PreferenceActivity;
-import android.util.Log;
-import android.view.Menu;
-import android.view.View;
-import android.widget.ListView;
  
 public class Preferences extends PreferenceActivity {
     @Override

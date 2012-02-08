@@ -14,19 +14,22 @@
 		    android:layout_width="fill_parent"
 		    android:layout_height="fill_parent"
 		    android:layout_weight="1">
-		    <ImageView
-		    	android:id="@+id/about_us_image"
-		    	android:layout_width="fill_parent"
-		    	android:layout_height="150dp"
-		    	android:paddingLeft="10dp"
-		    	android:paddingRight="10dp"/>
+		    <TextView
+		       	android:id="@+id/about_us_title"
+		       	android:layout_width="fill_parent"
+		       	android:layout_height="wrap_content"
+		       	android:padding="10dp"
+		       	android:text="@string/about_us"
+		       	android:textStyle="bold"
+		       	android:textColor="#ee0000"
+		       	android:textSize="12pt"/>
 			<TextView
 			    android:layout_width="fill_parent" 
 			    android:layout_height="wrap_content" 
-			    android:padding="10sp"
+			    android:padding="10dp"
 			    android:text="@string/charter_title"
 			    android:textStyle="bold"
-			    android:textColor="#ee0000"
+			    android:textColor="#000000"
 			    android:textSize="10pt"/>
 			<LinearLayout
 				android:id="@+id/charter_layout"
@@ -37,123 +40,75 @@
 					android:id="@+id/chater_title"
 				    android:layout_width="fill_parent" 
 				    android:layout_height="wrap_content" 
-				    android:paddingLeft="10sp"
-				    android:paddingRight="10sp"
-				    android:paddingBottom="12sp"
-				    android:text="@string/charter_short"
+				    android:paddingLeft="10dp"
+				    android:paddingRight="10dp"
+				    android:paddingBottom="12dp"
+				    android:text="@string/charter_content0"
 				    android:textColor="#000000"
 				    android:textSize="8pt"/>
-				<Button
-					android:id="@+id/charter_extend_button"
-					android:layout_width="fill_parent"
-					android:layout_height="wrap_content"
-					android:layout_marginLeft="40sp"
-					android:layout_marginRight="40sp"
-					android:text="@string/click_to_extend"
-					android:textSize="7pt"
-					android:textStyle="italic"/>
+					<LinearLayout
+					    android:id="@+id/charter_display_layout"
+					    android:orientation="vertical"
+					    android:layout_width="fill_parent"
+					    android:layout_height="wrap_content">
+					  	<TextView
+						    android:id="@+id/charter_display_1"
+						    android:layout_width="fill_parent"
+						    android:layout_height="wrap_content"
+						    android:paddingLeft="20dp"
+						    android:paddingRight="20dp"
+						    android:paddingBottom="10dp"
+						    android:text="@string/charter_content1"
+						    android:textColor="#666666"
+						    android:textSize="7pt" />
+					  	<TextView
+						    android:id="@+id/charter_display_2"
+						    android:layout_width="fill_parent"
+						    android:layout_height="wrap_content"
+						    android:paddingLeft="20dp"
+						    android:paddingRight="20dp"
+						    android:paddingBottom="10dp"
+						    android:text="@string/charter_content2"
+						    android:textColor="#666666"
+						    android:textSize="7pt" />
+					  	<TextView
+						    android:id="@+id/charter_display_3"
+						    android:layout_width="fill_parent"
+						    android:layout_height="wrap_content"
+						    android:paddingLeft="20dp"
+						    android:paddingRight="20dp"
+						    android:paddingBottom="10dp"
+						    android:text="@string/charter_content3"
+						    android:textColor="#666666"
+						    android:textSize="7pt" />
+					  	<TextView
+						    android:id="@+id/charter_display_4"
+						    android:layout_width="fill_parent"
+						    android:layout_height="wrap_content"
+						    android:paddingLeft="20dp"
+						    android:paddingRight="20dp"
+						    android:paddingBottom="10dp"
+						    android:text="@string/charter_content4"
+						    android:textColor="#666666"
+						    android:textSize="7pt" />
+				</LinearLayout>
 			</LinearLayout>
 			<TextView  
 			    android:layout_width="fill_parent" 
 			    android:layout_height="wrap_content" 
-			    android:padding="10sp"
+			    android:padding="10dp"
 			    android:text="@string/contact_us_title"
 			    android:textStyle="bold"
-			    android:textColor="#ee0000"
+			    android:textColor="#000000"
 			    android:textSize="10pt"/>
 			<TextView
 				android:layout_width="fill_parent"
 				android:layout_height="wrap_content"
-				android:padding="10sp"
+				android:padding="10dp"
 				android:textColor="#000000"
 				android:textSize="8pt"
 				android:text="@string/contact_us_content"/>
-			<TextView
-			    android:layout_width="fill_parent" 
-			    android:layout_height="wrap_content" 
-			    android:padding="10sp"
-			    android:text="@string/donate"
-			    android:textStyle="bold"
-			    android:textColor="#ee0000"
-			    android:textSize="10pt"/>
-			<TextView
-				android:layout_width="fill_parent"
-				android:layout_height="wrap_content"
-				android:padding="10sp"
-				android:textColor="#000000"
-				android:textSize="8pt"
-				android:text="@string/donate_content1"/>
-			<TextView
-				android:layout_width="fill_parent"
-				android:layout_height="wrap_content"
-				android:padding="10sp"
-				android:textColor="#000000"
-				android:textSize="8pt"
-				android:text="@string/donate_content2"/>
-			<TextView
-				android:layout_width="fill_parent"
-				android:layout_height="wrap_content"
-				android:padding="10sp"
-				android:textColor="#000000"
-				android:textSize="8pt"
-				android:text="@string/donate_content3"/>
-			<Button
-				android:id="@+id/donation_button"
-				android:layout_width="fill_parent"
-				android:layout_height="wrap_content"
-				android:layout_marginLeft="40sp"
-				android:layout_marginRight="40sp"
-				android:text="@string/donate_button_text"
-				android:textSize="7pt"
-				android:textStyle="italic"/>
-			<TextView
-			    android:layout_width="fill_parent" 
-			    android:layout_height="wrap_content" 
-			    android:padding="10sp"
-			    android:text="@string/work_with_us"
-			    android:textStyle="bold"
-			    android:textColor="#ee0000"
-			    android:textSize="10pt"/>
-			<TextView
-				android:layout_width="fill_parent"
-				android:layout_height="wrap_content"
-				android:padding="10sp"
-				android:textColor="#000000"
-				android:textSize="8pt"
-				android:text="@string/work_with_us_content1"/>
-			<TextView
-				android:layout_width="fill_parent"
-				android:layout_height="wrap_content"
-				android:padding="10sp"
-				android:textColor="#000000"
-				android:textSize="8pt"
-				android:text="@string/work_with_us_content2"/>
-			<Button
-				android:id="@+id/work_with_us_button"
-				android:layout_width="fill_parent"
-				android:layout_height="wrap_content"
-				android:layout_marginLeft="40sp"
-				android:layout_marginRight="40sp"
-				android:text="@string/work_with_us_button_text"
-				android:textSize="7pt"
-				android:textStyle="italic"/>
-			<TextView
-			    android:layout_width="fill_parent" 
-			    android:layout_height="wrap_content" 
-			    android:padding="10sp"
-			    android:text="@string/website"
-			    android:textStyle="bold"
-			    android:textColor="#ee0000"
-			    android:textSize="10pt"/>
-			<Button
-				android:id="@+id/goto_website_button"
-				android:layout_width="fill_parent"
-				android:layout_height="wrap_content"
-				android:layout_marginLeft="40sp"
-				android:layout_marginRight="40sp"
-				android:text="@string/website_button"
-				android:textSize="7pt"
-				android:textStyle="italic"/>
+
 	    </LinearLayout>
 	</ScrollView>
 </LinearLayout>

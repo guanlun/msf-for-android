@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout 
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	android:orientation="vertical"
+	android:layout_width="fill_parent"
+	android:layout_height="fill_parent"
+	android:gravity="center"
+	android:background="#ffffff">
+	
+    <ImageView
+		android:id="@+id/msf_view_image"
+		android:layout_width="fill_parent"
+		android:layout_height="150dp"
+		android:paddingLeft="10dp"
+		android:paddingRight="10dp" 
+		android:layout_marginBottom="30dp"
+		android:layout_marginTop="-20dp"/>
+    
+    <Button 
+        android:id="@+id/msf_view_about_us"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="40dp"
+		android:layout_marginRight="40dp"
+		android:layout_marginBottom="20dp"
+        android:text="@string/about_us"
+        android:textSize="8pt"
+        android:textStyle="italic" />    
+        
+    <Button 
+        android:id="@+id/msf_view_donate"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="40dp"
+		android:layout_marginRight="40dp"
+		android:layout_marginBottom="20dp"
+        android:text="@string/donate"
+        android:textSize="8pt"
+        android:textStyle="italic" />
+    
+    <Button 
+        android:id="@+id/msf_view_work_with_us"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="40dp"
+		android:layout_marginRight="40dp"
+		android:layout_marginBottom="20dp"
+        android:text="@string/work_with_us"
+        android:textSize="8pt"
+        android:textStyle="italic" />    
+        
+    <Button 
+        android:id="@+id/msf_view_website"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="40dp"
+		android:layout_marginRight="40dp"
+        android:text="@string/website_button"
+        android:textSize="8pt"
+        android:textStyle="italic" />    
+        
+</LinearLayout>

@@ -27,6 +27,7 @@ public class ImageGallery extends Activity {
 	
 	private ArrayList<Bitmap> images;
 	private Gallery gallery;
+	private int infoPos;
 	private int picturePos;
 	
 	@Override
@@ -40,7 +41,8 @@ public class ImageGallery extends Activity {
 		Intent intent = getIntent();
 		
 		if (intent !=null && intent.getExtras()!=null) {
-            picturePos = intent.getExtras().getInt(ImageGrid.pic_id);
+			infoPos = intent.getExtras().getInt("info_pos");
+            picturePos = intent.getExtras().getInt("pic_pos");
         }
 		
 		gallery = (Gallery)findViewById(R.id.gallery_view);
@@ -54,7 +56,6 @@ public class ImageGallery extends Activity {
 		private LayoutInflater inflater;
 	        
 	    public ImageAdapter() {
-	            
 			TypedArray a = obtainStyledAttributes(R.styleable.HelloGallery);
 			a.recycle();
 			inflater = getLayoutInflater();
@@ -80,8 +81,10 @@ public class ImageGallery extends Activity {
 			
 			View v = inflater.inflate(R.layout.gallery_item, null);
 			
+			final int text_pos = position + infoPos - picturePos;
+			
 			TextView imageTitle = (TextView)v.findViewById(R.id.image_title);
-			imageTitle.setText(ImageGrid.getImages().get(position).title);
+			imageTitle.setText(ImageGrid.getImages().get(text_pos).title);
 			imageTitle.getBackground().setAlpha(100);
 			
 			ImageView galleryImage = (ImageView)v.findViewById(R.id.image_view);
@@ -89,7 +92,7 @@ public class ImageGallery extends Activity {
 			galleryImage.setAdjustViewBounds(true);
 			
 			TextView galleryDiscription = (TextView)v.findViewById(R.id.image_description);
-			galleryDiscription.setText(ImageGrid.getImages().get(position).content);
+			galleryDiscription.setText(ImageGrid.getImages().get(text_pos).content);
 			galleryDiscription.getBackground().setAlpha(100);
 			
 			TextView imageShareButton = (TextView)v.findViewById(R.id.image_share);
@@ -99,8 +102,8 @@ public class ImageGallery extends Activity {
 				public void onClick(View v) {
 					Intent intent = new Intent(Intent.ACTION_SEND);
 					intent.setType("text/plain");
-					intent.putExtra(Intent.EXTRA_SUBJECT, ImageGrid.getImages().get(position).title);
-					intent.putExtra(Intent.EXTRA_TEXT, ImageGrid.getImages().get(position).url);
+					intent.putExtra(Intent.EXTRA_SUBJECT, ImageGrid.getImages().get(text_pos).title);
+					intent.putExtra(Intent.EXTRA_TEXT, ImageGrid.getImages().get(text_pos).url);
 					startActivity(Intent.createChooser(intent, "Share with"));
 				}
 			});
@@ -125,6 +128,16 @@ public class ImageGallery extends Activity {
 			intent.putExtra(Intent.EXTRA_SUBJECT, ImageGrid.getImages().get(picturePos).title);
 			intent.putExtra(Intent.EXTRA_TEXT, ImageGrid.getImages().get(picturePos).url);
 			startActivity(Intent.createChooser(intent, "Share with"));
+			return true;
+        case R.id.menu_msf:
+        	intent = new Intent(ImageGallery.this, MSFView.class);
+        	startActivity(intent);
+            return true;
+        case R.id.menu_settings:
+            intent = new Intent(ImageGallery.this, Preferences.class);
+            startActivity(intent);
+            this.finish();
+            return true;
 		default:
 			return super.onOptionsItemSelected(item);
 		}
