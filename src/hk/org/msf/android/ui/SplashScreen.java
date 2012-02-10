@@ -3,7 +3,6 @@ package hk.org.msf.android.ui;
 import hk.org.msf.android.R;
 import hk.org.msf.android.data.DataUpdateService;
 import hk.org.msf.android.data.DataUpdater;
-import hk.org.msf.android.utils.AnimationListenerAdapter;
 import hk.org.msf.android.utils.MySettings;
 
 import java.util.Locale;
@@ -17,6 +16,7 @@ import android.os.Message;
 import android.view.View;
 import android.view.Window;
 import android.view.animation.Animation;
+import android.view.animation.Animation.AnimationListener;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -54,10 +54,11 @@ public class SplashScreen extends Activity {
 		} else if(langPref.equals(MySettings.SIMPLIFIED_CHINESE)) {
 			config.locale = Locale.CHINA;
 		}
-		getBaseContext().getResources().updateConfiguration(config, 
+		
+		this.getBaseContext().getResources().updateConfiguration(config, 
 				getBaseContext().getResources().getDisplayMetrics());
 
-		setContentView(R.layout.splash);
+		this.setContentView(R.layout.splash);
 		ImageView iv = (ImageView)findViewById(R.id.splash_image);
 		
 		/**
@@ -81,7 +82,7 @@ public class SplashScreen extends Activity {
 		 * start the service to update database
 		 */
 		Intent intent = new Intent(this, DataUpdateService.class);
-		startService(intent);
+		this.startService(intent);
 
 		Message msg = new Message();
 		msg.what = 0;
@@ -138,5 +139,17 @@ public class SplashScreen extends Activity {
 		Message msg = new Message();
 		msg.what = 0;
 		handler.sendMessage(msg);
+	}
+	
+	/**
+	 * This class is used as a syntactical sugar for AnimationListener
+	 */
+	class AnimationListenerAdapter implements AnimationListener {
+		@Override
+		public void onAnimationEnd(Animation arg0) {}
+		@Override
+		public void onAnimationRepeat(Animation arg0) {}
+		@Override
+		public void onAnimationStart(Animation arg0) {}
 	}
 }

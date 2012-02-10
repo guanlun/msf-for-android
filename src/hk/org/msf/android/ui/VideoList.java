@@ -57,6 +57,8 @@ public class VideoList extends Activity implements OnItemClickListener {
 	
 	private VideoAdapter adapter;
 	
+	private Thread prepareImageThread;
+	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		
@@ -74,7 +76,8 @@ public class VideoList extends Activity implements OnItemClickListener {
 		
 		videoList.setOnItemClickListener(this);
 		showLoadingMessage();
-		new Thread(new PrepareImage()).start();
+		prepareImageThread = new Thread(new PrepareImage());
+		prepareImageThread.start();
 	}
 	
 	/**
@@ -96,11 +99,11 @@ public class VideoList extends Activity implements OnItemClickListener {
 
 		@Override
 		public void run() {
-			videoEntryList = db.getRSSEntryList(RSSDatabaseHelper.VIDEO);
 			adapter = new VideoAdapter();
 			ArrayList<String> urls = new ArrayList<String>();
 			
 			waitForDatabaseReady();
+			videoEntryList = db.getRSSEntryList(RSSDatabaseHelper.VIDEO);
 			
 			for(int i = 0; i < videoEntryList.size(); i++) {
 				urls.add(videoEntryList.get(i).image);
@@ -115,22 +118,10 @@ public class VideoList extends Activity implements OnItemClickListener {
 	 * if the data have not been inserted into the database, wait until it is done.
 	 */
 	private void waitForDatabaseReady() {
-		
-		int timeCount = 0;
-		
 		while(!db.updateFinished(RSSDatabaseHelper.VIDEO)) {
 			try {
 				Thread.sleep(1000);
-			} catch(Exception e) {
-				
-			}
-			db.refreshEntryList(RSSDatabaseHelper.VIDEO);
-			videoEntryList = db.getRSSEntryList(RSSDatabaseHelper.VIDEO);
-			timeCount++;
-			//But we will not wait for too long time, when a certain time limit is reached, end it
-			if(timeCount == 20) {
-				break;
-			}
+			} catch(Exception e) {}
 		}
 	}
 
@@ -156,43 +147,43 @@ public class VideoList extends Activity implements OnItemClickListener {
 				
 				WebSettings webSettings = webView.getSettings();
 				
-        webSettings.setSupportZoom(true);
-        webSettings.setJavaScriptEnabled(true);
-        webSettings.setBuiltInZoomControls(true);
-        webSettings.setDefaultZoom(WebSettings.ZoomDensity.FAR);
-        webView.setLayoutParams(
-        		new ViewFlipper.LayoutParams(
-        				ViewFlipper.LayoutParams.FILL_PARENT,
-        				ViewFlipper.LayoutParams.FILL_PARENT
-        				)
-        		);
-        
-        webView.setWebViewClient(new WebViewClient() {
-        	@Override
-        	 public boolean shouldOverrideUrlLoading(WebView view, String url) {
-        		 view.loadUrl(url);
-        		 return true;
-        	 }
-        });
-        
-        videoFlipper.addView(webView);
-        videoFlipper.showNext();
-        
-        if(MySettings.getMySettings().getVideoSource().equals(MySettings.YOUTUBE)) {
-        	webView.loadUrl(getApplicationContext().getResources().getString(R.string.youtube_site));
-        } else {
-        	webView.loadUrl(getApplicationContext().getResources().getString(R.string.youku_site));
-        }
-        
-        webView.setWebViewClient(new WebViewClient() {
-        	@Override
-        	public void onPageFinished(WebView view, String url) {
-        		progress.dismiss();
-        	}
-        });
+		        webSettings.setSupportZoom(true);
+		        webSettings.setJavaScriptEnabled(true);
+		        webSettings.setBuiltInZoomControls(true);
+		        webSettings.setDefaultZoom(WebSettings.ZoomDensity.FAR);
+		        webView.setLayoutParams(
+		        		new ViewFlipper.LayoutParams(
+		        				ViewFlipper.LayoutParams.FILL_PARENT,
+		        				ViewFlipper.LayoutParams.FILL_PARENT
+		        				)
+		        		);
+		        
+		        webView.setWebViewClient(new WebViewClient() {
+		        	@Override
+		        	 public boolean shouldOverrideUrlLoading(WebView view, String url) {
+		        		 view.loadUrl(url);
+		        		 return true;
+		        	 }
+		        });
+		        
+		        videoFlipper.addView(webView);
+		        videoFlipper.showNext();
+		        
+		        if(MySettings.getMySettings().getVideoSource().equals(MySettings.YOUTUBE)) {
+		        	webView.loadUrl(getApplicationContext().getResources().getString(R.string.youtube_site));
+		        } else {
+		        	webView.loadUrl(getApplicationContext().getResources().getString(R.string.youku_site));
+		        }
+		        
+		        webView.setWebViewClient(new WebViewClient() {
+		        	@Override
+		        	public void onPageFinished(WebView view, String url) {
+		        		progress.dismiss();
+		        	}
+		        });
 			}
 		});
-    videoList.addFooterView(moreVideos);
+	    videoList.addFooterView(moreVideos);
 	}
 	
 	/**
@@ -214,9 +205,9 @@ public class VideoList extends Activity implements OnItemClickListener {
 	};
 	
 	private Handler refreshHandler = new Handler() {
-	  public void handleMessage(Message msg) {
-	    videoList.invalidateViews(); // update view
-	  }
+		public void handleMessage(Message msg) {
+			videoList.invalidateViews(); // update view
+		}
 	};
 	
 	private class VideoAdapter extends BaseAdapter {
@@ -306,7 +297,8 @@ public class VideoList extends Activity implements OnItemClickListener {
 		videoList.removeFooterView(moreVideos);
 		showLoadingMessage();
 		waitForDatabaseReady();
-		new Thread(new PrepareImage()).start();
+		prepareImageThread = new Thread(new PrepareImage());
+        prepareImageThread.start();
 	}
 	
 	public void checkState() {

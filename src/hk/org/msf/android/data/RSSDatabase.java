@@ -86,7 +86,7 @@ public class RSSDatabase {
 	}
 	
 	/**
-	 * update all the ArrayLists that stores the data:
+	 * update all the ArrayLists that stores the data
 	 */
 	public void refreshAllEntryLists() {
 		refreshEntryList(RSSDatabaseHelper.NEWS);
@@ -96,11 +96,11 @@ public class RSSDatabase {
 	}
 	
 	/**
-	 * update an specified ArrayList
-	 * @param type of the entry
+	 * Update an specified ArrayList
+	 * This method is called TWICE for each entry type in each start
+	 * @param entryType
 	 */
 	public void refreshEntryList(String entryType) {
-		
 		if(entryType.equals(RSSDatabaseHelper.NEWS)) {
 			newsEntryList = prepareRSSEntryList(RSSDatabaseHelper.NEWS);
 			if (newsEntryList.size() == 0) {
@@ -133,12 +133,11 @@ public class RSSDatabase {
 	}
 	
 	/**
-	 * This function gets an Arraylist of specified entryType from the database
+	 * This function gets an ArrayList of specified entryType from the database
 	 * @param a specified entryType used to select entries from the database
 	 * @return an ArrayList containing all the entries of the specified type
 	 */
 	public ArrayList<RSSEntry> getRSSEntryList(String entryType) {
-		
 		if(entryType.equals(RSSDatabaseHelper.NEWS)) {
 			return newsEntryList;
 		} else if(entryType.equals(RSSDatabaseHelper.BLOG)) {
@@ -168,11 +167,11 @@ public class RSSDatabase {
 	
 	/**
 	 * Get the entryLists ready for retrieving, load the data from the database to the ArrayLists:
+	 * This method is called TWICE for each entry type in each start
 	 * @param the specified type of the entry
 	 * @return the ArrayList that contains the data of the specified type
 	 */
 	private ArrayList<RSSEntry> prepareRSSEntryList(String entryType) {
-
 		ArrayList<RSSEntry> entryList = new ArrayList<RSSEntry>();
 		
 		String selection = RSSDatabaseHelper.KEY_ENTRY_TYPE + " = ?";
@@ -181,15 +180,6 @@ public class RSSDatabase {
 		Cursor c = sqliteDB.query(RSSDatabaseHelper.KEY_TABLE_NAME, null, 
 				selection, selectionArgs, null, null, null);
 		
-		/**
-		 * c.getString(1): entryType
-		 * c.getString(2): title
-		 * c.getString(3): content
-		 * c.getString(4): date
-		 * c.getString(5): url
-		 * c.getString(6): author
-		 * c.getString(7): image
-		 */
 		for(c.moveToFirst(); !c.isAfterLast(); c.moveToNext()) {
 			entryList.add(new RSSEntry(c.getString(1), c.getString(2), c.getString(3), 
 					c.getString(4), c.getString(5), c.getString(6), c.getString(7)));
@@ -205,7 +195,6 @@ public class RSSDatabase {
 	 * @param a specified entryType used to delete entries from the database
 	 */
 	public void clearDataColumn(String entryType) {
-	
 		sqliteDB.delete(RSSDatabaseHelper.KEY_TABLE_NAME, 
 				RSSDatabaseHelper.KEY_ENTRY_TYPE + "='" + entryType + "'", null);
 	}
@@ -214,7 +203,6 @@ public class RSSDatabase {
 	 * Clear all the information in the database
 	 */
 	public void clearEntireDatabase() {
-		
         clearDataColumn(RSSDatabaseHelper.NEWS);
         clearDataColumn(RSSDatabaseHelper.BLOG);
         clearDataColumn(RSSDatabaseHelper.IMAGE);

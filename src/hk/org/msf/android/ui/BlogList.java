@@ -5,7 +5,7 @@ import hk.org.msf.android.data.RSSDatabase;
 import hk.org.msf.android.data.RSSDatabaseHelper;
 import hk.org.msf.android.data.RSSEntry;
 import hk.org.msf.android.utils.ImageFetcher;
-import hk.org.msf.android.utils.Miscellaneous;
+import hk.org.msf.android.utils.XMLParser;
 
 import java.util.ArrayList;
 import java.util.Hashtable;
@@ -22,7 +22,6 @@ import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.util.Log;
 import android.view.Display;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -39,7 +38,6 @@ import android.webkit.WebViewClient;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemLongClickListener;
-import android.widget.LinearLayout.LayoutParams;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -69,16 +67,16 @@ public class BlogList extends Activity implements OnItemClickListener, OnItemLon
     private Hashtable<String, Bitmap> imageHash;
     
 	private BlogAdapter adapter;
-	
+
 	private Thread prepareImageThread;
-	
+
 	private int currentPos = 0;
     
     @Override
     public void onCreate(Bundle savedInstanceState) {
         
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.blogs);
+        setContentView(R.layout.blog);
         
         self = this;
         imageHash = new Hashtable<String, Bitmap>();
@@ -114,11 +112,11 @@ public class BlogList extends Activity implements OnItemClickListener, OnItemLon
     class PrepareImage implements Runnable {
         @Override
         public void run() {
-            blogEntryList = db.getRSSEntryList(RSSDatabaseHelper.BLOG);
             adapter = new BlogAdapter();
             ArrayList<String> urls = new ArrayList<String>();
             
             waitForDatabaseReady();
+            blogEntryList = db.getRSSEntryList(RSSDatabaseHelper.BLOG);
             
             for (int i = 0; i < blogEntryList.size(); i++) {
                 if (blogEntryList.get(i).image != null) {
@@ -135,20 +133,10 @@ public class BlogList extends Activity implements OnItemClickListener, OnItemLon
      * if the data have not been inserted into the database, wait until it is done.
      */
     private void waitForDatabaseReady() {
-        int timeCount = 0;
         while(!db.updateFinished(RSSDatabaseHelper.BLOG)) {
             try {
                 Thread.sleep(1000);
-            } catch(Exception e) {
-                
-            }
-            db.refreshEntryList(RSSDatabaseHelper.BLOG);
-            blogEntryList = db.getRSSEntryList(RSSDatabaseHelper.BLOG);
-            timeCount++;
-            //But we will not wait for too long time, when a certain time limit is reached, end it
-            if(timeCount == 10) {
-                break;
-            }
+            } catch(Exception e) {}
         }
     }
     
@@ -267,12 +255,12 @@ public class BlogList extends Activity implements OnItemClickListener, OnItemLon
 
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
-            View v = inflater.inflate(R.layout.blogs_item, null);
+            View v = inflater.inflate(R.layout.blog_item, null);
             
             LinearLayout ll = (LinearLayout) v.findViewById(R.id.blog_text_layout);
             
             TextView blogTitle = (TextView) v.findViewById(R.id.blog_title);
-            blogTitle.setText(Miscellaneous.teaseTitle(blogEntryList.get(position).title));
+            blogTitle.setText(XMLParser.teaseTitle(blogEntryList.get(position).title));
             
             TextView blogAuthor = (TextView) v.findViewById(R.id.blog_author);
             blogAuthor.setText(blogEntryList.get(position).otherInfo);
@@ -405,14 +393,12 @@ public class BlogList extends Activity implements OnItemClickListener, OnItemLon
         webSettings.setBlockNetworkImage(false);
         webSettings.setBlockNetworkLoads(false);
         
-        LinearLayout.LayoutParams webParams = 
+        webView.setLayoutParams(
         		new LinearLayout.LayoutParams(
                 		LinearLayout.LayoutParams.FILL_PARENT, 
                 		LinearLayout.LayoutParams.WRAP_CONTENT
-                );
-        webParams.weight = 4.0f;
-        
-        webView.setLayoutParams(webParams);
+                )
+		);
         
         webView.setWebViewClient(new WebViewClient() {
             @Override
@@ -421,82 +407,12 @@ public class BlogList extends Activity implements OnItemClickListener, OnItemLon
                  return true;
              }
         });
+        
         webView.setInitialScale(150);
         webView.loadDataWithBaseURL("http://www.msf.org.hk/", 
                 blogEntryList.get(position).content, "text/html", "UTF-8", null);
         
-        final Button shareButton = new Button(this);
-        
-        LinearLayout.LayoutParams buttonParams = 
-        		new LinearLayout.LayoutParams(
-        				LinearLayout.LayoutParams.FILL_PARENT,
-        				LinearLayout.LayoutParams.WRAP_CONTENT, 
-        				1
-				);
-        buttonParams.height = 30;
-        buttonParams.weight = 0.1f;
-        buttonParams.leftMargin = 50;
-        buttonParams.rightMargin = 50;
-        
-        shareButton.setLayoutParams(buttonParams);
-        
-        shareButton.setText(this.getApplicationContext().getResources().getString(R.string.tap2share));
-        shareButton.setTextSize(16);
-        shareButton.setTextColor(Color.rgb(255, 0, 0));
-        shareButton.setTypeface(null, Typeface.BOLD);
-        shareButton.setGravity(Gravity.CENTER);
-        shareButton.getBackground().setAlpha(150);
-        shareButton.setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				shareItem(position);
-			}
-        });
-        
-        /*
-		ListView container = new ListView(this);
-        container.setLayoutParams(
-        		new ViewFlipper.LayoutParams(
-        				ViewFlipper.LayoutParams.FILL_PARENT,
-        				ViewFlipper.LayoutParams.FILL_PARENT
-				)
-		);
-        
-        container.setAdapter(new BaseAdapter() {
-			@Override
-			public int getCount() {
-				return 1;
-			}
-
-			@Override
-			public Object getItem(int position) {
-				return position;
-			}
-
-			@Override
-			public long getItemId(int position) {
-				return position;
-			}
-
-			@Override
-			public View getView(int position, View convertView, ViewGroup parent) {
-				if (position == 0) {
-					return webView;
-				} else if (position == 1) {
-					return shareButton;
-				} else {
-					return null;
-				}
-			}
-        });
-        */
-        
-        // container.addFooterView(shareButton);
-        
-        webLayout.addView(webView);
-        webLayout.addView(shareButton);
-        
-        blogFlipper.addView(webLayout);
+        blogFlipper.addView(webView);
         blogFlipper.showNext();
     }
     
@@ -517,10 +433,13 @@ public class BlogList extends Activity implements OnItemClickListener, OnItemLon
      * Refresh the list to show the most up-to-date entries:
      */
     public void refreshList() {
-    	blogList.removeFooterView(moreBlogs);
-		showLoadingMessage();
-        waitForDatabaseReady();
-        new Thread(new PrepareImage()).start();
+    	if (!prepareImageThread.isAlive()) {
+	    	blogList.removeFooterView(moreBlogs);
+			showLoadingMessage();
+	        waitForDatabaseReady();
+	        prepareImageThread = new Thread(new PrepareImage());
+	        prepareImageThread.start();
+    	}
     }
 
     public void checkState() {
@@ -549,7 +468,7 @@ public class BlogList extends Activity implements OnItemClickListener, OnItemLon
 		}
 		return true;
 	}
-	
+
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		Intent intent;

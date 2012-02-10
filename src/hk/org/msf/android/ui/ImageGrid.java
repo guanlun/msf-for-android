@@ -51,7 +51,6 @@ public class ImageGrid extends Activity implements OnItemClickListener, OnItemLo
 	
 	private static ArrayList<RSSEntry> imageEntryList;
 	
-	public static final String pic_id = "ID of picture";
 	private ProgressDialog progress;
 	private RSSDatabase db;
 	
@@ -82,11 +81,10 @@ public class ImageGrid extends Activity implements OnItemClickListener, OnItemLo
 		moreImages.setTextSize(20f);
 		moreImages.setTextColor(Color.rgb(255, 255, 255));
 		moreImages.setTypeface(null, Typeface.BOLD);
+		
 		moreImages.setOnClickListener(new OnClickListener() {
-			
 			@Override
 			public void onClick(View v) {
-				
 				showLoadingMessage();
 				
 				webView = new WebView(self);
@@ -104,25 +102,25 @@ public class ImageGrid extends Activity implements OnItemClickListener, OnItemLo
         				)
         		);
         
-        webView.setWebViewClient(new WebViewClient() {
-        	@Override
-        	 public boolean shouldOverrideUrlLoading(WebView view, String url) {
-        		 view.loadUrl(url);
-        		 return true;
-        	 }
-        });
-        
-        imageGridLayout.addView(webView);
-        
-        webView.loadUrl(getApplicationContext().getResources()
-        		.getString(R.string.link_images_url));	
-        
-        webView.setWebViewClient(new WebViewClient() {
-        	@Override
-        	public void onPageFinished(WebView view, String url) {
-        		progress.dismiss();
-        	}
-        });
+		        webView.setWebViewClient(new WebViewClient() {
+		        	@Override
+		        	 public boolean shouldOverrideUrlLoading(WebView view, String url) {
+		        		 view.loadUrl(url);
+		        		 return true;
+		        	 }
+		        });
+		        
+		        imageGridLayout.addView(webView);
+		        
+		        webView.loadUrl(getApplicationContext().getResources()
+		        		.getString(R.string.link_images_url));	
+		        
+		        webView.setWebViewClient(new WebViewClient() {
+		        	@Override
+		        	public void onPageFinished(WebView view, String url) {
+		        		progress.dismiss();
+		        	}
+		        });
 			}
 		});
 		
@@ -164,7 +162,8 @@ public class ImageGrid extends Activity implements OnItemClickListener, OnItemLo
         ll.setOrientation(LinearLayout.VERTICAL);
         ll.setLayoutParams(new ViewGroup.LayoutParams(
         		ViewGroup.LayoutParams.FILL_PARENT,
-        		ViewGroup.LayoutParams.FILL_PARENT));
+        		ViewGroup.LayoutParams.FILL_PARENT
+        ));
         
         Button viewButton = new Button(this);
         viewButton.setText(self.getApplication().getResources().getString(R.string.open_view));
@@ -193,7 +192,9 @@ public class ImageGrid extends Activity implements OnItemClickListener, OnItemLo
         shareButton.getBackground().setAlpha(90);
         shareButton.setLayoutParams(new LinearLayout.LayoutParams(
         		LinearLayout.LayoutParams.FILL_PARENT,
-        		LinearLayout.LayoutParams.WRAP_CONTENT));
+        		LinearLayout.LayoutParams.WRAP_CONTENT
+        ));
+        
         shareButton.setOnClickListener(new OnClickListener() {
         	@Override
         	public void onClick(View v) {
@@ -244,8 +245,12 @@ public class ImageGrid extends Activity implements OnItemClickListener, OnItemLo
 	 * Refresh the list to show the most up-to-date entries:
 	 */
 	public void refreshGrid() {
-        imageEntryList = db.getRSSEntryList(RSSDatabaseHelper.IMAGE);
-        imageGridView.setAdapter(adapter);
+		if (!prepareImageThread.isAlive()) {
+	        imageEntryList = db.getRSSEntryList(RSSDatabaseHelper.IMAGE);
+	        imageGridView.setAdapter(adapter);
+	        prepareImageThread = new Thread(new PrepareImage());
+	        prepareImageThread.start();
+		}
 	}
 	
 	public void checkState() {
@@ -265,11 +270,11 @@ public class ImageGrid extends Activity implements OnItemClickListener, OnItemLo
 	 */
 	private class PrepareImage implements Runnable {
 		public void run() {
-			imageEntryList = db.getRSSEntryList(RSSDatabaseHelper.IMAGE);
 			adapter = new ImageAdapter();
 			ArrayList<String> urls = new ArrayList<String>();
 			
 			waitForDatabaseReady();
+			imageEntryList = db.getRSSEntryList(RSSDatabaseHelper.IMAGE);
 			
 			for(int i = 0; i < imageEntryList.size(); i++) {
 				urls.add(imageEntryList.get(i).image);
@@ -284,20 +289,10 @@ public class ImageGrid extends Activity implements OnItemClickListener, OnItemLo
 	 * if the data have not been inserted into the database, wait until it is done.
 	 */
 	private void waitForDatabaseReady() {
-		int timeCount = 0;
 		while(!db.updateFinished(RSSDatabaseHelper.IMAGE)) {
 			try {
 				Thread.sleep(1000);
-			} catch(Exception e) {
-				
-			}
-			db.refreshEntryList(RSSDatabaseHelper.IMAGE);
-			imageEntryList = db.getRSSEntryList(RSSDatabaseHelper.IMAGE);
-			timeCount++;
-			//But we will not wait for too long time, when a certain time limit is reached, end it
-			if(timeCount == 20) {
-				break;
-			}
+			} catch(Exception e) {}
 		}
 	}
 	
@@ -326,9 +321,9 @@ public class ImageGrid extends Activity implements OnItemClickListener, OnItemLo
 	 * When a new image is loaded, invoke the handler to update the imageGridView
 	 */
 	private Handler refreshHandler = new Handler() {
-	  public void handleMessage(Message msg) {
-	    imageGridView.invalidateViews(); // update view
-	  }
+		public void handleMessage(Message msg) {
+			imageGridView.invalidateViews(); // update view
+		}
 	};
 
 	private class ImageAdapter extends BaseAdapter {

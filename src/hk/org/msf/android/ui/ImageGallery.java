@@ -30,11 +30,14 @@ public class ImageGallery extends Activity {
 	private int infoPos;
 	private int picturePos;
 	
+	public static ImageGallery self;
+	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
-		
 		super.onCreate(savedInstanceState);
 		this.setContentView(R.layout.gallery);
+		
+		self = this;
 		
 		images = ImageFetcher.getImage(RSSDatabaseHelper.IMAGE);
 		
@@ -93,10 +96,9 @@ public class ImageGallery extends Activity {
 			
 			TextView galleryDiscription = (TextView)v.findViewById(R.id.image_description);
 			galleryDiscription.setText(ImageGrid.getImages().get(text_pos).content);
-			galleryDiscription.getBackground().setAlpha(100);
 			
 			TextView imageShareButton = (TextView)v.findViewById(R.id.image_share);
-			imageShareButton.getBackground().setAlpha(140);
+			imageShareButton.getBackground().setAlpha(100);
 			imageShareButton.setOnClickListener(new OnClickListener() {
 				@Override
 				public void onClick(View v) {

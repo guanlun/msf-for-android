@@ -1,6 +1,5 @@
 package hk.org.msf.android.data;
 
-import hk.org.msf.android.utils.AboutUsParser;
 import hk.org.msf.android.utils.MySettings;
 import hk.org.msf.android.utils.XMLParser;
 import hk.org.msf.android.utils.YoukuHTMLParser;
@@ -14,38 +13,25 @@ public class DataUpdater {
 	
 	private RSSDatabase db;
 	
-	private boolean online;
-	
-	/**Constructor
-	 * @param Context
-	 */
 	public DataUpdater(Context context) {
-		
         mContext = context;
-
-        /**
-         * initialize the database, get the entryLists ready with the data of the last time inserted to it;
-         */
 		db = RSSDatabase.getDatabaseInstance(mContext);
-		db.refreshAllEntryLists();
-		
-		/**
-		 * if online, now we can clear the database and put new data in:
-		 * we don't need to worry about the data because they are now stored in the lists:
-		 */
-		online = isOnline(mContext);
-		if(online) {
+	}
+	
+	public void startUpdate() {
+		db.refreshAllEntryLists(); // put data into the lists as backup
+		if(isOnline(mContext)) {
 			db.clearEntireDatabase();
+			this.updateAll();
 		}
 	}
 
     /**
      * update all the date from the web, store them into the database:
+     * This function is called ONCE
      */
     public void updateAll() {
     	try {
-    		AboutUsParser.updateAboutUs(mContext);
-    		
     		updateData(RSSDatabaseHelper.NEWS);
     		db.refreshEntryList(RSSDatabaseHelper.NEWS);
             
@@ -61,32 +47,27 @@ public class DataUpdater {
     }
 		
     /**
-     * update a specified type of data:
+     * Parse XML got from websites and push data into the database
+     * Called once for each entry type
+     * @param entryType
      */
     public void updateData(String entryType) {
     	try{
-	    	if(entryType.equals(RSSDatabaseHelper.NEWS)) { //news
-	    		XMLParser.parseRSSFeeds(mContext, RSSDatabaseHelper.NEWS);
-	    		
-	    	} else if(entryType.equals(RSSDatabaseHelper.BLOG)) { // blogs
-	    		XMLParser.parseRSSFeeds(mContext, RSSDatabaseHelper.BLOG);
-	    		
-	    	} else if(entryType.equals(RSSDatabaseHelper.IMAGE)) { //images
-	    		XMLParser.parseRSSFeeds(mContext, RSSDatabaseHelper.IMAGE);
-	    		
+    		if(entryType.equals(RSSDatabaseHelper.NEWS)) {
+    			XMLParser.parseRSSFeeds(mContext, RSSDatabaseHelper.NEWS);
+    		} else if(entryType.equals(RSSDatabaseHelper.BLOG)) {
+    			XMLParser.parseRSSFeeds(mContext, RSSDatabaseHelper.BLOG);
+    		} else if(entryType.equals(RSSDatabaseHelper.IMAGE)) {
+    			XMLParser.parseRSSFeeds(mContext, RSSDatabaseHelper.IMAGE);
 	    	} else if(entryType.equals(RSSDatabaseHelper.VIDEO)) {
-	    		
 	    		String videoResource = MySettings.getMySettings().getVideoSource();
-	    		
-	    		if(videoResource.equals(MySettings.YOUTUBE)) { //youtube video
+	    		if(videoResource.equals(MySettings.YOUTUBE)) { // youtube video
 	    			XMLParser.parseRSSFeeds(mContext, RSSDatabaseHelper.VIDEO);
-	    		} else if(videoResource.equals(MySettings.YOUKU)) { //youku video
+	    		} else if(videoResource.equals(MySettings.YOUKU)) { // youku video
 	    			YoukuHTMLParser.parseHTML(mContext);
 	    		}
 	    	}
-      } catch (Exception e) {
-        e.printStackTrace();
-      }
+		} catch (Exception e) {}
     }
 
     /**

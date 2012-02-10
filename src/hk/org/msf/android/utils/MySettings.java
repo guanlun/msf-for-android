@@ -19,12 +19,11 @@ public class MySettings {
     /**
      * Create one instance of the class
      */
-	private static final MySettings _instance = new MySettings();
+	private static final MySettings instance = new MySettings();
     
 	private String langPref;
 	
 	private MySettings() {
-		// empty
 	}
 	
 	/**
@@ -32,8 +31,7 @@ public class MySettings {
 	 * @return the setting instance
 	 */
 	public static synchronized MySettings getMySettings() {
-		
-		return _instance;
+		return instance;
     }
 
 	/**
@@ -41,7 +39,6 @@ public class MySettings {
 	 * @param mContext the context used for the preference settings
 	 */
 	public void configurePrefs(Context mcontext) {
-		
 		// Get the xml/preferences.xml preferences
 		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(mcontext);
 		
@@ -65,25 +62,10 @@ public class MySettings {
 		editor.commit();
 	}
 	
-	/**
-	 * Get the language preference
-	 * @return the language preference string
-	 */
 	public String getLangPref() {
 		return langPref;
 	}
 	
-	/**
-	 * Since YouTube is not available in mainland China, when the language preference is 
-	 * simplified Chinese, set Youku as the video ource site, otherwise set YouTube as it.
-	 * 
-	 * In fact, we think this part should be changed because people using simplified Chinese
-	 * may not be in mainland China. And most of them have no difficulty at all to read 
-	 * traditional Chinese on the Youtube website. We did this way because this is the MSF's 
-	 * regulation. If you are going to change the code please reconsider this problem.
-	 * 
-	 * @return the string representing the video source site
-	 */
 	public String getVideoSource() {
 		if(langPref.equals(SIMPLIFIED_CHINESE)) {
 			return YOUKU;

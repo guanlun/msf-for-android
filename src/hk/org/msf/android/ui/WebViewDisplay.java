@@ -9,6 +9,9 @@ import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
+/**
+ * Display a WebView as a substitution to opening the browser to view the web pages
+ */
 public class WebViewDisplay extends Activity {
 
 	private WebViewDisplay self;
@@ -48,28 +51,27 @@ public class WebViewDisplay extends Activity {
 			
 			WebSettings settings = webView.getSettings();
 			settings.setSupportZoom(true);
-      settings.setJavaScriptEnabled(true);
-      settings.setBuiltInZoomControls(true);
-      settings.setDefaultZoom(WebSettings.ZoomDensity.FAR);
-      settings.setAllowFileAccess(true);
-      settings.setPluginsEnabled(true);
+			settings.setJavaScriptEnabled(true);
+			settings.setBuiltInZoomControls(true);
+			settings.setDefaultZoom(WebSettings.ZoomDensity.FAR);
+			settings.setAllowFileAccess(true);
+			settings.setPluginsEnabled(true);
         
-      webView.setWebViewClient(new WebViewClient() {
-        @Override
-         public boolean shouldOverrideUrlLoading(WebView view, String url) {
-           view.loadUrl(url);
-           return true;
-         }
-      });
-      
-      webView.setWebViewClient(new WebViewClient() {
-        @Override
-        public void onPageFinished(WebView view, String url) {
-          progress.dismiss();
-        }
-      });
-      
-      webView.loadUrl(url);
+			webView.setWebViewClient(new WebViewClient() {
+				@Override
+					public boolean shouldOverrideUrlLoading(WebView view, String url) {
+						view.loadUrl(url);
+					return true;
+				}
+			});
+			      
+			webView.setWebViewClient(new WebViewClient() {
+				@Override
+				public void onPageFinished(WebView view, String url) {
+					progress.dismiss();
+				}
+			});
+			webView.loadUrl(url);
 		}
 	}
 	

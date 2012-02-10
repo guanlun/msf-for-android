@@ -46,7 +46,7 @@ public class ImageFetcher {
 	public static final String NEWS_PATH = "/data/data/hk.org.msf.android/news";
     public static final String BLOG_PATH = "/data/data/hk.org.msf.android/blog";
 	public static final String FVISION_PATH = "/data/data/hk.org.msf.android/image";
-	public static final String VIDEO_PATH = "/data/data/hk.org.msf.android/videoImage";
+	public static final String VIDEO_PATH = "/data/data/hk.org.msf.android/video";
 
 	/**
 	 * get images from url, store them in local directory:
@@ -54,77 +54,26 @@ public class ImageFetcher {
 	 * @param entryType type of the entry, for news, frontline vision or for videos
 	 */
 	public static void fetchImage(ArrayList<String> urls, String entryType) {
-        int numOfNewImages = 0;
 		if(entryType.equals(RSSDatabaseHelper.NEWS)) {
             newsImages = new ArrayList<Bitmap>();
-			numOfNewImages = downloadNewImages(urls, RSSDatabaseHelper.NEWS);
+            sendImageToView(urls, RSSDatabaseHelper.NEWS);
 			deleteOutdatedImages(urls, RSSDatabaseHelper.NEWS);
-    	    //now read the images from local directory:
-            for (int i = 0; i < urls.size(); ++i) {
-                //get the images:
-                Bitmap b = BitmapFactory.decodeFile(NEWS_PATH + getFileName(urls.get(i)));
-                if (b != null) {
-                    //compress the images to save memory:
-                    b = Bitmap.createScaledBitmap(b, 
-                            (int)(0.5 * b.getWidth()), (int)(0.5 * b.getHeight()), false);
-                    //add the images to a list of bitmaps:
-                    newsImages.add(b);
-                    NewsList.self.addImage(i, b); // new code
-                }
-            }
+
 		} else if(entryType.equals(RSSDatabaseHelper.BLOG)) {
 		    blogImages = new ArrayList<Bitmap>();
-            numOfNewImages = downloadNewImages(urls, RSSDatabaseHelper.BLOG);
+		    sendImageToView(urls, RSSDatabaseHelper.BLOG);
             deleteOutdatedImages(urls, RSSDatabaseHelper.BLOG);
-            // now read the images from local directory
-            for (int i = 0; i < urls.size(); i++) {
-                // get the images:
-            	Bitmap b = BitmapFactory.decodeFile(BLOG_PATH + getFileName(urls.get(i)));
-                if (b != null) {
-                    // compress the images to save memory:
-                	b = Bitmap.createScaledBitmap(b,
-                            (int)(0.5 * b.getWidth()), (int)(0.5 * b.getHeight()), false);
-                    // add the images to a list of bitmaps:
-                	blogImages.add(b);
-                	BlogList.self.addImage(i, b);
-                }
-            }
+
         } else if(entryType.equals(RSSDatabaseHelper.IMAGE)) {
 			fVisionImages = new ArrayList<Bitmap>();
-			numOfNewImages = downloadNewImages(urls, RSSDatabaseHelper.IMAGE);
+			sendImageToView(urls, RSSDatabaseHelper.IMAGE);
 			deleteOutdatedImages(urls, RSSDatabaseHelper.IMAGE);
 			
-			//now read the images from local directory:
-			for (int i = numOfNewImages; i < urls.size(); ++i) {
-				//get the images:
-				Bitmap b = BitmapFactory.decodeFile(FVISION_PATH + getFileName(urls.get(i)));
-				if (b != null) {
-					//compress the images to save memory:
-					b = Bitmap.createScaledBitmap(b, 
-							(int)(0.5 * b.getWidth()), (int)(0.5 * b.getHeight()), false);
-					//add the images to a list of bitmaps:
-					fVisionImages.add(b);
-					ImageGrid.self.addImage(i, b); // new code
-				}
-			}
-			
 		} else if(entryType.equals(RSSDatabaseHelper.VIDEO)) {
-		  videoImages = new ArrayList<Bitmap>();
-			numOfNewImages = downloadNewImages(urls, RSSDatabaseHelper.VIDEO);
+			videoImages = new ArrayList<Bitmap>();
+			sendImageToView(urls, RSSDatabaseHelper.VIDEO);
 			deleteOutdatedImages(urls, RSSDatabaseHelper.VIDEO);
 			
-			//now read the images from local directory:
-			for (int i = 0; i < urls.size(); ++i) {
-				//get the images:
-				Bitmap b = BitmapFactory.decodeFile(VIDEO_PATH + getFileName(urls.get(i)));
-				if (b != null) {
-					b = Bitmap.createScaledBitmap(b, 
-							(int)(0.5 * b.getWidth()), (int)(0.5 * b.getHeight()), false);
-					//add the images to a list of bitmaps:
-					videoImages.add(b);
-					VideoList.self.addImage(i, b);
-				}
-			}
 		}
 	}
 	
@@ -148,63 +97,52 @@ public class ImageFetcher {
 	}
 	
 	/**
-	 * Download the new images that are not in the local directory
+	 * Download or Load images and send them to the ImageGrid view
 	 * @param urls The url list storing the urls of images
 	 * @param entryType Type of the entry
-	 * @return The number of new images that are downloaded
 	 * @throws IOException 
 	 */
-	private static int downloadNewImages(ArrayList<String> urls, String entryType) {
-	    int numOfNewImages = 0; // count the number of new images
+	private static void sendImageToView(ArrayList<String> urls, String entryType) {
 		if(entryType.equals(RSSDatabaseHelper.NEWS)) {
 			for(int i = 0; i < urls.size(); i++) {
 				File file = new File(NEWS_PATH + getFileName(urls.get(i)));
 				if(!file.exists()) {
 					downloadFromURL(urls.get(i), NEWS_PATH + getFileName(urls.get(i)));
-                    Bitmap b = BitmapFactory.decodeFile(NEWS_PATH + getFileName(urls.get(i)));
-                    if (b != null) {
-                        //compress the images to save memory:
-                        b = Bitmap.createScaledBitmap(b, 
-                                (int)(0.5 * b.getWidth()), (int)(0.5 * b.getHeight()), false);
-                        //add the images to a list of bitmaps:
-                        newsImages.add(b);
-                        NewsList.self.addImage(i, b); // new code
-                    }
-                    numOfNewImages++;
 				}
+                Bitmap b = BitmapFactory.decodeFile(NEWS_PATH + getFileName(urls.get(i)));
+                if (b != null) {
+                    b = Bitmap.createScaledBitmap(b, 
+                            (int)(0.5 * b.getWidth()), (int)(0.5 * b.getHeight()), false);
+                    newsImages.add(b);
+                    NewsList.self.addImage(i, b);
+                }
 			}
 		} else if(entryType.equals(RSSDatabaseHelper.BLOG)) {
 			for (int i = 0; i < urls.size(); i++) {
                 File file = new File(BLOG_PATH + getFileName(urls.get(i)));
                 if (!file.exists()) {
                     downloadFromURL(urls.get(i), BLOG_PATH + getFileName(urls.get(i)));
-                    Bitmap b = BitmapFactory.decodeFile(BLOG_PATH + getFileName(urls.get(i)));
-                    if (b != null) {
-                        //compress the images to save memory:
-                        b = Bitmap.createScaledBitmap(b, 
-                                (int)(0.5 * b.getWidth()), (int)(0.5 * b.getHeight()), false);
-                        //add the images to a list of bitmaps:
-                        blogImages.add(b);
-                        BlogList.self.addImage(i, b);
-                    }
-                    numOfNewImages++;
-                } 
+                }
+                Bitmap b = BitmapFactory.decodeFile(BLOG_PATH + getFileName(urls.get(i)));
+                if (b != null) {
+                    b = Bitmap.createScaledBitmap(b, 
+                            (int)(0.5 * b.getWidth()), (int)(0.5 * b.getHeight()), false);
+                    blogImages.add(b);
+                    BlogList.self.addImage(i, b);
+                }
 			}
 		} else if(entryType.equals(RSSDatabaseHelper.IMAGE)) {
 			for(int i = 0; i < urls.size(); i++) {
 				File file = new File(FVISION_PATH + getFileName(urls.get(i)));
 				if(!file.exists()) {
 					downloadFromURL(urls.get(i), FVISION_PATH + getFileName(urls.get(i)));
-					Bitmap b = BitmapFactory.decodeFile(FVISION_PATH + getFileName(urls.get(i)));
-					if (b != null) {
-        	            //compress the images to save memory:
-                        b = Bitmap.createScaledBitmap(b, 
-                          (int)(0.5 * b.getWidth()), (int)(0.5 * b.getHeight()), false);
-                        //add the images to a list of bitmaps:
-                        fVisionImages.add(b);
-                        ImageGrid.self.addImage(i, b); // new code
-	                }
-					numOfNewImages++;
+				}
+				Bitmap b = BitmapFactory.decodeFile(FVISION_PATH + getFileName(urls.get(i)));
+				if (b != null) {
+					b = Bitmap.createScaledBitmap(b, 
+							(int)(0.5 * b.getWidth()), (int)(0.5 * b.getHeight()), false);
+					fVisionImages.add(b);
+					ImageGrid.self.addImage(i, b);
 				}
 			}
 		} else if(entryType.equals(RSSDatabaseHelper.VIDEO)) {
@@ -212,20 +150,16 @@ public class ImageFetcher {
 				File file = new File(VIDEO_PATH + getFileName(urls.get(i)));
 				if(!file.exists()) {
    					downloadFromURL(urls.get(i), VIDEO_PATH + getFileName(urls.get(i)));
-                    Bitmap b = BitmapFactory.decodeFile(VIDEO_PATH + getFileName(urls.get(i)));
-                    if (b != null) {
-                        //compress the images to save memory:
-                        b = Bitmap.createScaledBitmap(b, 
-                                (int)(0.5 * b.getWidth()), (int)(0.5 * b.getHeight()), false);
-                        //add the images to a list of bitmaps:
-                        videoImages.add(b);
-                        VideoList.self.addImage(i, b); // new code
-                    }
-					numOfNewImages++;
+				}
+                Bitmap b = BitmapFactory.decodeFile(VIDEO_PATH + getFileName(urls.get(i)));
+                if (b != null) {
+                    b = Bitmap.createScaledBitmap(b, 
+                            (int)(0.5 * b.getWidth()), (int)(0.5 * b.getHeight()), false);
+                    videoImages.add(b);
+                    VideoList.self.addImage(i, b);
 				}
 			}
 		}
-		return numOfNewImages;
 	}
 	
 	/**
@@ -288,25 +222,6 @@ public class ImageFetcher {
 					if(isVideoImage(allFiles[i].getName())) { //if is a video image file
 						allFiles[i].delete(); //then delete it
 					}
-				}
-			}
-		}
-	}
-	
-	public static void deleteImages(String entryType) {
-		File dir = new File(DATA_PATH);
-		File [] allFiles = dir.listFiles();
-		
-		if (entryType.equals(RSSDatabaseHelper.BLOG)) {
-			for (int i = 0; i < allFiles.length; i++) {
-				if (isBlogImage(allFiles[i].getName())) {
-					allFiles[i].delete();
-				}
-			}
-		} else if (entryType.equals(RSSDatabaseHelper.VIDEO)) {
-			for (int i = 0; i < allFiles.length; i++) {
-				if (isVideoImage(allFiles[i].getName())) {
-					allFiles[i].delete();
 				}
 			}
 		}
@@ -375,7 +290,6 @@ public class ImageFetcher {
 	 * @param filename the filename of the image to store it in local directory
 	 */
 	private static void downloadFromURL(String imageURL, String fileName) {
-
 		File file = new File(fileName);
 		/**
 		 * call the getImageFromWeb method the get the image:
@@ -396,8 +310,7 @@ public class ImageFetcher {
 			FileOutputStream fos = new FileOutputStream(file);
 			fos.write(baf.toByteArray());
 			fos.close();
-		} catch (Exception e) {
-		}
+		} catch (Exception e) {}
 	}
 
 	/**
@@ -407,7 +320,6 @@ public class ImageFetcher {
 	 * @return the filename parsed from the URL
 	 */
 	private static String getFileName(String url) {
-
 		String filename1 = new String();
 		String filename2 = new String();
 		for (int i = 0; i < url.length(); ++i) {

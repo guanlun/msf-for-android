@@ -483,4 +483,16 @@ public abstract class XMLParser {
 		
 		return dayStr + " " + monthStr + " " + yearStr;
 	}
+	
+	public static String teaseTitle (String title) {
+		String [] words = title.split(" ");
+		if (words.length > 10) {
+            title = "";
+			for (int i = 0; i < 10; i++) {
+				title += words[i] + " ";
+			}
+			title += "...";
+		}
+		return title;
+	}
 }
