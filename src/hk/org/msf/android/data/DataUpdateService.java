@@ -4,7 +4,6 @@ import android.app.IntentService;
 import android.content.Intent;
 
 public class DataUpdateService extends IntentService {
-
 	public DataUpdateService() {
 		super("Data Updater");
 	}

@@ -1,6 +1,7 @@
 package hk.org.msf.android.ui;
 
 import hk.org.msf.android.R;
+import hk.org.msf.android.data.DataUpdater;
 import hk.org.msf.android.data.RSSDatabase;
 import hk.org.msf.android.data.RSSDatabaseHelper;
 import hk.org.msf.android.data.RSSEntry;
@@ -45,6 +46,7 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 import android.widget.ViewFlipper;
 
 public class NewsList extends Activity implements OnItemClickListener, OnItemLongClickListener {
@@ -91,9 +93,17 @@ public class NewsList extends Activity implements OnItemClickListener, OnItemLon
 	    db = RSSDatabase.getDatabaseInstance(null);
 	    newsEntryList = db.getRSSEntryList(RSSDatabaseHelper.NEWS);
 
-	    showLoadingMessage();
-        prepareImageThread = new Thread(new PrepareImage());
-        prepareImageThread.start();
+        boolean listEmpty = newsEntryList.isEmpty();
+        boolean noCoon = !DataUpdater.isOnline(self);
+        if (!(listEmpty && noCoon)) {
+		    showLoadingMessage();
+	        prepareImageThread = new Thread(new PrepareImage());
+	        prepareImageThread.start();
+        } else {
+        	Toast toast = Toast.makeText(self, 
+        			"No network connection available, please check you network status", Toast.LENGTH_SHORT);
+        	toast.show();
+        }
 	}
 
 	@Override
@@ -458,7 +468,6 @@ public class NewsList extends Activity implements OnItemClickListener, OnItemLon
 				newsFlipper.removeViewAt(1);
 			}
 		} else {
-			prepareImageThread.interrupt();
 			NewsList.self.finish();
 		}
 	}

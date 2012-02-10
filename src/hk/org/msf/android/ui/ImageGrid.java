@@ -1,6 +1,7 @@
 package hk.org.msf.android.ui;
 
 import hk.org.msf.android.R;
+import hk.org.msf.android.data.DataUpdater;
 import hk.org.msf.android.data.RSSDatabase;
 import hk.org.msf.android.data.RSSDatabaseHelper;
 import hk.org.msf.android.data.RSSEntry;
@@ -38,6 +39,7 @@ import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 import android.widget.ViewFlipper;
 
 public class ImageGrid extends Activity implements OnItemClickListener, OnItemLongClickListener {
@@ -72,6 +74,7 @@ public class ImageGrid extends Activity implements OnItemClickListener, OnItemLo
 		imageHash = new Hashtable<String, Bitmap>();
 		
 		db = RSSDatabase.getDatabaseInstance(self);
+		imageEntryList = db.getRSSEntryList(RSSDatabaseHelper.IMAGE);
 		
 		imageGridLayout = (RelativeLayout)findViewById(R.id.image_grid_layout);
 		
@@ -111,7 +114,6 @@ public class ImageGrid extends Activity implements OnItemClickListener, OnItemLo
 		        });
 		        
 		        imageGridLayout.addView(webView);
-		        
 		        webView.loadUrl(getApplicationContext().getResources()
 		        		.getString(R.string.link_images_url));	
 		        
@@ -127,10 +129,14 @@ public class ImageGrid extends Activity implements OnItemClickListener, OnItemLo
 		imageGridView = (GridView)findViewById(R.id.image_gridview);
 		imageGridView.setOnItemClickListener(this);
 		imageGridView.setOnItemLongClickListener(this);
-		
-		showLoadingMessage();
-		prepareImageThread = new Thread(new PrepareImage());
-		prepareImageThread.start();
+
+        boolean listEmpty = imageEntryList.isEmpty();
+        boolean noCoon = !DataUpdater.isOnline(self);
+        if (!(listEmpty && noCoon)) {
+			showLoadingMessage();
+			prepareImageThread = new Thread(new PrepareImage());
+			prepareImageThread.start();
+        }
 	}
 	
 	@Override

@@ -1,6 +1,7 @@
 package hk.org.msf.android.ui;
 
 import hk.org.msf.android.R;
+import hk.org.msf.android.data.DataUpdater;
 import hk.org.msf.android.data.RSSDatabase;
 import hk.org.msf.android.data.RSSDatabaseHelper;
 import hk.org.msf.android.data.RSSEntry;
@@ -48,7 +49,7 @@ public class VideoList extends Activity implements OnItemClickListener {
 	private TextView moreVideos;
 	
 	public static ArrayList<RSSEntry> videoEntryList;
-	
+
 	private ProgressDialog progress;
 	
 	private RSSDatabase db;
@@ -61,13 +62,14 @@ public class VideoList extends Activity implements OnItemClickListener {
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
-		
 		super.onCreate(savedInstanceState);
 		this.setContentView(R.layout.video_list);
 		
 		self = this;
 		imageHash = new Hashtable<String, Bitmap>();
+		
 		db = RSSDatabase.getDatabaseInstance(null);
+		videoEntryList = db.getRSSEntryList(RSSDatabaseHelper.VIDEO);
 		
 		videoList = (ListView)findViewById(R.id.VideoList);
 		videoList.setDivider(new ColorDrawable(Color.rgb(150, 150, 150)));
@@ -75,9 +77,14 @@ public class VideoList extends Activity implements OnItemClickListener {
 		videoFlipper = (ViewFlipper)findViewById(R.id.VideoFlipper);
 		
 		videoList.setOnItemClickListener(this);
-		showLoadingMessage();
-		prepareImageThread = new Thread(new PrepareImage());
-		prepareImageThread.start();
+		
+        boolean listEmpty = videoEntryList.isEmpty();
+        boolean noCoon = !DataUpdater.isOnline(self);
+        if (!(listEmpty && noCoon)) {
+			showLoadingMessage();
+			prepareImageThread = new Thread(new PrepareImage());
+			prepareImageThread.start();
+        }
 	}
 	
 	/**
@@ -302,7 +309,6 @@ public class VideoList extends Activity implements OnItemClickListener {
 	}
 	
 	public void checkState() {
-		
 		if (videoFlipper.getChildCount() > 1) {
 			if(webView.canGoBack()) {
 				webView.goBack();

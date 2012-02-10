@@ -17,10 +17,6 @@ import android.widget.TabHost.TabSpec;
 import android.widget.TextView;
 
 public class MainTabs extends TabActivity implements OnTabChangeListener {
-	
-	/**
-	 * The Variables for View
-	 */
 	private ImageButton backButton;
 	private ImageButton refreshButton;
 	private TabHost mainTab;
@@ -40,10 +36,8 @@ public class MainTabs extends TabActivity implements OnTabChangeListener {
 	 */
     @Override
 	public void onCreate(Bundle savedInstanceState) {
-    	
 	    super.onCreate(savedInstanceState);
-	    
-    	setContentView(R.layout.tabs);
+    	this.setContentView(R.layout.tabs);
     	
 	    tabTitles = new String [] {
 		    	this.getString(R.string.latest_news),
@@ -99,7 +93,7 @@ public class MainTabs extends TabActivity implements OnTabChangeListener {
         });
 	    
 	    mainTab = this.getTabHost();
-	    this.BuildTabs();
+	    this.buildTabs();
 	    
 	    mainTab.setOnTabChangedListener(this);
 	    mainTab.setCurrentTab(1);
@@ -110,7 +104,6 @@ public class MainTabs extends TabActivity implements OnTabChangeListener {
 
 	@Override
 	public void onTabChanged(String tabId) {
-		
 		for (int i = 0; i < tabTitles.length; i++) {
 			if (tabTitles[i].equals(tabId)) {
 				mainTitle.setText(tabTitles[i]);
@@ -122,44 +115,31 @@ public class MainTabs extends TabActivity implements OnTabChangeListener {
 	/**
      * Build the Tabs
      */
-    public void BuildTabs() {
-    	
-    	TabSpec spec;
-    	/**
-    	 * Latest News
-    	 */
-   		spec = mainTab.newTabSpec(tabTitles[0])
-   						.setIndicator(makeTab(tabTitles[0], tabTitlesDrawable[0]))
-   						.setContent(new Intent(this, NewsList.class));
-   		mainTab.addTab(spec);
-   		/**
-   		 * Blogs
-   		 */
-   		spec = mainTab.newTabSpec(tabTitles[1])
-						.setIndicator(makeTab(tabTitles[1], tabTitlesDrawable[1]))
-						.setContent(new Intent(this, BlogList.class));
-   		mainTab.addTab(spec);
+    public void buildTabs() {
+   		TabSpec newsTab = mainTab.newTabSpec(tabTitles[0])
+				.setIndicator(makeTab(tabTitles[0], tabTitlesDrawable[0]))
+				.setContent(new Intent(this, NewsList.class));
+
+   		TabSpec blogTab = mainTab.newTabSpec(tabTitles[1])
+				.setIndicator(makeTab(tabTitles[1], tabTitlesDrawable[1]))
+				.setContent(new Intent(this, BlogList.class));
    		
-   		/**
-   		 * Videos 
-   		 */
-   		spec = mainTab.newTabSpec(tabTitles[2])
-						.setIndicator(makeTab(tabTitles[2], tabTitlesDrawable[2]))
-						.setContent(new Intent(this, ImageGrid.class));
-		mainTab.addTab(spec);
-		
-		/**
-   		 * Photos
-   		 */
-   		spec = mainTab.newTabSpec(tabTitles[3])
-						.setIndicator(makeTab(tabTitles[3], tabTitlesDrawable[3]))
-						.setContent(new Intent(this, VideoList.class));
-		mainTab.addTab(spec);
+   		TabSpec imageTab = mainTab.newTabSpec(tabTitles[2])
+				.setIndicator(makeTab(tabTitles[2], tabTitlesDrawable[2]))
+				.setContent(new Intent(this, ImageGrid.class));
+
+   		TabSpec videoTab = mainTab.newTabSpec(tabTitles[3])
+				.setIndicator(makeTab(tabTitles[3], tabTitlesDrawable[3]))
+				.setContent(new Intent(this, VideoList.class));
+   		
+		mainTab.addTab(newsTab);
+		mainTab.addTab(blogTab);
+		mainTab.addTab(imageTab);
+		mainTab.addTab(videoTab);
    	
     }
     
     private View makeTab(final String Text, int drawable) {
-    	
     	LayoutInflater inflater = getLayoutInflater();
     	View view = inflater.inflate(R.layout.tab_button, null);
     	TextView tabButton = (TextView) view.findViewById(R.id.tabsText);
@@ -175,7 +155,6 @@ public class MainTabs extends TabActivity implements OnTabChangeListener {
 	 */
 	@Override
 	public boolean onPrepareOptionsMenu(Menu menu) {
-	
 		menu.clear();
 		MenuInflater inflater = getMenuInflater();
 		inflater.inflate(R.menu.options_menu, menu);
@@ -184,16 +163,9 @@ public class MainTabs extends TabActivity implements OnTabChangeListener {
 	
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle item selection
     	Intent intent;
         switch (item.getItemId()) {
         case R.id.menu_msf:
-        	/* The following is used before
-            Dialog dialog = new Dialog(this);
-            dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-            dialog.setContentView(R.layout.about_dialog);
-            dialog.show();
-            */
         	intent = new Intent(MainTabs.this, MSFView.class);
         	startActivity(intent);
             return true;

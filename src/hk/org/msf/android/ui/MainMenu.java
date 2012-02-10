@@ -85,7 +85,6 @@ public class MainMenu extends Activity implements OnItemClickListener {
     }
     
     class MainMenuAdapter extends BaseAdapter {
-
         @Override
         public int getCount() {
             return 6;
@@ -103,7 +102,6 @@ public class MainMenu extends Activity implements OnItemClickListener {
 
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
-            
             LayoutInflater inflater = getLayoutInflater();
             View v = inflater.inflate(R.layout.main_menu_item, null);
             
@@ -162,12 +160,6 @@ public class MainMenu extends Activity implements OnItemClickListener {
     	Intent intent;
         switch (item.getItemId()) {
         case R.id.menu_msf:
-        	/* The following is used before
-            Dialog dialog = new Dialog(this);
-            dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-            dialog.setContentView(R.layout.about_dialog);
-            dialog.show();
-            */
         	intent = new Intent(MainMenu.this, MSFView.class);
         	startActivity(intent);
             return true;
