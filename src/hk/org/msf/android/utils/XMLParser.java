@@ -9,19 +9,28 @@ import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.net.URISyntaxException;
+import java.net.URL;
+import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import org.apache.http.HttpResponse;
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.xpath.XPath;
+import javax.xml.xpath.XPathConstants;
+import javax.xml.xpath.XPathExpression;
+import javax.xml.xpath.XPathFactory;
+
 import org.apache.http.client.ClientProtocolException;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.impl.client.DefaultHttpClient;
+import org.w3c.dom.Document;
+import org.w3c.dom.NodeList;
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
 
 import android.content.Context;
+import android.util.Log;
 import android.util.Xml;
 
 /**
@@ -36,13 +45,17 @@ public abstract class XMLParser {
 	private static String imageFeedURL;
 	private static String youtubeVideoFeedURL;
 	
+	private static DocumentBuilderFactory domFactory;
+	private static DocumentBuilder builder;
+	private static XPath xpath;
+	
 	/**
 	 * The public function of the XMLParser, parse the XML files
 	 * @param a instance of a Context used to instansiate the database
 	 * @param the specified type of the entry
+	 * @throws ParserConfigurationException 
 	 */
-	public static void parseRSSFeeds(Context context, String entryType)
-			throws URISyntaxException, ClientProtocolException, IOException, XmlPullParserException {
+	public static void parseRSSFeeds(Context context, String entryType) throws ParserConfigurationException {
 		
 		db = RSSDatabase.getDatabaseInstance(context);
 		
@@ -51,22 +64,31 @@ public abstract class XMLParser {
         imageFeedURL = context.getResources().getString(R.string.msf_imagesurl);
 		youtubeVideoFeedURL = context.getResources().getString(R.string.youtube_video_url);
 		
+		// initialize the parser
+		domFactory = DocumentBuilderFactory.newInstance();
+		domFactory.setNamespaceAware(true);
+		builder = domFactory.newDocumentBuilder();
+		xpath = XPathFactory.newInstance().newXPath();
+		
 		InputStream is = null;
 		
-		if(entryType.equals(RSSDatabaseHelper.NEWS)) {
-			is = getInputStream(newsFeedURL);
-			parseMSFNews(is);
-		} else if(entryType.equals(RSSDatabaseHelper.BLOG)) {
-			is = getInputStream(blogFeedURL);
-			parseMSFBlogs(is);
-		} else if(entryType.equals(RSSDatabaseHelper.IMAGE)) {
-			is = getInputStream(imageFeedURL);
-			parseMSFImages(is);
-		} else if(entryType.equals(RSSDatabaseHelper.VIDEO)) {
-			is = getInputStream(youtubeVideoFeedURL);
-			parseYouTubeEntries(is);
+		try {
+			if(entryType.equals(RSSDatabaseHelper.NEWS)) {
+				is = getInputStream(newsFeedURL);
+				parseMSFNews(is);
+			} else if(entryType.equals(RSSDatabaseHelper.BLOG)) {
+				is = getInputStream(blogFeedURL);
+				parseMSFBlogs(is);
+			} else if(entryType.equals(RSSDatabaseHelper.IMAGE)) {
+				is = getInputStream(imageFeedURL);
+				parseMSFImages(is);
+			} else if(entryType.equals(RSSDatabaseHelper.VIDEO)) {
+				is = getInputStream(youtubeVideoFeedURL);
+				parseYouTubeEntries(is);
+			}
+			is.close();
+		} catch (Exception e) {
 		}
-		is.close();
 	}
 
 	/**
@@ -75,64 +97,61 @@ public abstract class XMLParser {
 	 * @return an InputStream containing the page
 	 */
     private static InputStream getInputStream(String url) throws ClientProtocolException, IOException {
-    	
-    	DefaultHttpClient httpclient = new DefaultHttpClient();
-    	HttpGet httpget = new HttpGet(url);
-    	HttpResponse response = httpclient.execute(httpget);
-    	return response.getEntity().getContent();
+    	URL link = new URL(url);
+    	return link.openStream();
     }
 
     /**
      * Parse the news on the MSF website
      * @param the InputStream containing the page
+     * @throws ParserConfigurationException 
      */
-	private static void parseMSFNews(InputStream is) throws XmlPullParserException, IOException {
-		
-		int depth = 0;
-		String parserName = null;
-		
-		String title = null;
-		String link = null;
-		String date = null;
-		String content = null;
-		
-		XmlPullParser parser = Xml.newPullParser();
-		parser.setInput(new InputStreamReader(is));
-		
-		for(int e = parser.getEventType(); e != XmlPullParser.END_DOCUMENT; e = parser.next()) {
-			depth = parser.getDepth();
-			try {
-				switch(e) {
-				case XmlPullParser.START_TAG:
-					parserName = parser.getName();
-					break;
-				case XmlPullParser.TEXT:
-					String value = parser.getText();
-					if(depth == 4) {
-						if(parserName.equals("title")) {
-							title = value;
-						} else if(parserName.equals("link")) {
-							link = value;
-						} else if(parserName.equals("pubDate")) {
-							date = parseDate(value, RSSDatabaseHelper.NEWS);
-						} else if(parserName.equals("description")) {
-							content = value;
-						}
-					}
-					break;
-				}
-				if(title != null && link != null && date != null && content != null) {
-					db.insertRSSEntry(new RSSEntry(RSSDatabaseHelper.NEWS, title, content,
-							date, "http://www.msf.org.hk/" + link, 
-							"", parseForNewsImage(content)));
-					title = null;
-					link = null;
-					date = null;
-					content = null;
-				}					
-			} catch(Exception ex) {
+	private static void parseMSFNews(InputStream is) throws Exception {
 
-			}
+		ArrayList<String> titleList = new ArrayList<String>();
+		ArrayList<String> linkList = new ArrayList<String>();
+		ArrayList<String> dateList = new ArrayList<String>();
+		ArrayList<String> contentList = new ArrayList<String>();
+		
+		Document doc = builder.parse(is);
+
+		XPathExpression expr;
+		NodeList nodes;
+		
+		expr = xpath.compile("//item/title");
+		nodes = (NodeList) expr.evaluate(doc, XPathConstants.NODESET);
+		for (int i = 0; i < nodes.getLength(); i++) {
+			titleList.add(nodes.item(i).getTextContent());
+		}
+		
+		expr = xpath.compile("//item/link");
+		nodes = (NodeList) expr.evaluate(doc, XPathConstants.NODESET);
+		for (int i = 0; i < nodes.getLength(); i++) {
+			linkList.add("http://www.msf.org.hk/" + nodes.item(i).getTextContent());
+		}
+		
+		expr = xpath.compile("//item/pubDate");
+		nodes = (NodeList) expr.evaluate(doc, XPathConstants.NODESET);
+		for (int i = 0; i < nodes.getLength(); i++) {
+			dateList.add(nodes.item(i).getTextContent());
+		}
+		
+		expr = xpath.compile("//item/description");
+		nodes = (NodeList) expr.evaluate(doc, XPathConstants.NODESET);
+		for (int i = 0; i < nodes.getLength(); i++) {
+			contentList.add(nodes.item(i).getTextContent());
+		}
+		
+		// put them in the database
+		for (int i = 0; i < titleList.size(); i++) {
+			db.insertRSSEntry(new RSSEntry(
+					RSSDatabaseHelper.NEWS, 
+					titleList.get(i), 
+					contentList.get(i),
+					dateList.get(i), 
+					linkList.get(i), 
+					"", 
+					parseForNewsImage(contentList.get(i))));
 		}
 	}
 	
@@ -140,21 +159,21 @@ public abstract class XMLParser {
      * Parse the blogs on the MSF website
      * @param the InputStream containing the page
      */
-	private static void parseMSFBlogs(InputStream is) throws XmlPullParserException, IOException {
+	private static void parseMSFBlogs(InputStream is) throws Exception {
 		
 		int depth = 0;
 		String parserName = null;
-		
+
 		String title = null;
 		String link = null;
 		String date = null;
 		String author = null;
 		String content = null;
 		String image = null;
-		
+
 		XmlPullParser parser = Xml.newPullParser();
 		parser.setInput(new InputStreamReader(is));
-		
+
 		for(int e = parser.getEventType(); e != XmlPullParser.END_DOCUMENT; e = parser.next()) {
 			depth = parser.getDepth();
 			try {
@@ -205,56 +224,58 @@ public abstract class XMLParser {
      * Parse the images on the MSF website
      * @param the InputStream containing the page
      */
-	private static void parseMSFImages(InputStream is) throws XmlPullParserException, IOException {
+	private static void parseMSFImages(InputStream is) throws Exception {
 		
-		int depth = 0;
-		String parserName = null;
+		ArrayList<String> titleList = new ArrayList<String>();
+		ArrayList<String> linkList = new ArrayList<String>();
+		ArrayList<String> dateList = new ArrayList<String>();
+		ArrayList<String> contentList = new ArrayList<String>();
+		ArrayList<String> imageList = new ArrayList<String>();
 		
-		String title = null;
-		String link = null;
-		String date = null;
-		String content = null;
-		String image = null;
-		
-		XmlPullParser parser = Xml.newPullParser();
-		parser.setInput(new InputStreamReader(is));
-		
-		for(int e = parser.getEventType(); e != XmlPullParser.END_DOCUMENT; e = parser.next()) {
-			depth = parser.getDepth();
-			try {
-				switch(e) {
-				case XmlPullParser.START_TAG:
-					parserName = parser.getName();
-					break;
-				case XmlPullParser.TEXT:
-					String value = parser.getText();
-					if(depth == 4) {
-						if(parserName.equals("title")) {
-							title = value;
-						} else if(parserName.equals("link")) {
-							link = value;
-						} else if(parserName.equals("description")) {
-							content = value;
-						} else if(parserName.equals("pubDate")) {
-							date = parseDate(value, RSSDatabaseHelper.IMAGE);
-						} else if(parserName.equals("encoded")) {
-							image = parseForImageURL(value);
-						}
-					}
-					break;
-				}
-				if(title != null && link != null && date != null && content != null && image != null) {
-					db.insertRSSEntry(new RSSEntry(RSSDatabaseHelper.IMAGE, title, content,
-							date, link, "", image));
-					title = null;
-					link = null;
-					date = null;
-					content = null;
-					image = null;
-				}
-			} catch(Exception ex) {
+		Document doc = builder.parse(is);
 
-			}
+		XPathExpression expr;
+		NodeList nodes;
+		
+		expr = xpath.compile("//item/title");
+		nodes = (NodeList) expr.evaluate(doc, XPathConstants.NODESET);
+		for (int i = 0; i < nodes.getLength(); i++) {
+			titleList.add(nodes.item(i).getTextContent());
+		}
+		
+		expr = xpath.compile("//item/link");
+		nodes = (NodeList) expr.evaluate(doc, XPathConstants.NODESET);
+		for (int i = 0; i < nodes.getLength(); i++) {
+			linkList.add(nodes.item(i).getTextContent());
+		}
+		
+		expr = xpath.compile("//item/description");
+		nodes = (NodeList) expr.evaluate(doc, XPathConstants.NODESET);
+		for (int i = 0; i < nodes.getLength(); i++) {
+			contentList.add(nodes.item(i).getTextContent());
+		}
+		
+		expr = xpath.compile("//item/pubDate");
+		nodes = (NodeList) expr.evaluate(doc, XPathConstants.NODESET);
+		for (int i = 0; i < nodes.getLength(); i++) {
+			dateList.add(parseDate(nodes.item(i).getTextContent(), RSSDatabaseHelper.IMAGE));
+		}
+		
+		expr = xpath.compile("//item/*[local-name()='encoded']");
+		nodes = (NodeList) expr.evaluate(doc, XPathConstants.NODESET);
+		for (int i = 0; i < nodes.getLength(); i++) {
+			imageList.add(parseForImageURL(nodes.item(i).getTextContent()));
+		}
+		
+		for (int i = 0; i < titleList.size(); i++) {
+			db.insertRSSEntry(new RSSEntry(
+					RSSDatabaseHelper.IMAGE, 
+					titleList.get(i), 
+					contentList.get(i),
+					dateList.get(i), 
+					linkList.get(i), 
+					"", 
+					imageList.get(i)));
 		}
 	}
 	

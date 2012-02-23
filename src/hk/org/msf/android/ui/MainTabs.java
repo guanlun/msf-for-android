@@ -96,10 +96,13 @@ public class MainTabs extends TabActivity implements OnTabChangeListener {
 	    this.buildTabs();
 	    
 	    mainTab.setOnTabChangedListener(this);
-	    mainTab.setCurrentTab(1);
 	    
-	    Intent i = getIntent();
-	    mainTab.setCurrentTab(i.getIntExtra("tab", 0));
+	    int currTab = getIntent().getIntExtra("tab", 0);
+	    mainTab.setCurrentTab(currTab);
+	    
+	    if (currTab == 0) {
+	    	mainTitle.setText(tabTitles[0]);
+	    }
 	}
 
 	@Override
@@ -111,7 +114,7 @@ public class MainTabs extends TabActivity implements OnTabChangeListener {
 			}
 		}
 	}
-
+	
 	/**
      * Build the Tabs
      */

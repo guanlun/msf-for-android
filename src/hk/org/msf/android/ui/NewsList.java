@@ -23,6 +23,7 @@ import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.util.Log;
 import android.view.Display;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -95,6 +96,7 @@ public class NewsList extends Activity implements OnItemClickListener, OnItemLon
 
         boolean listEmpty = newsEntryList.isEmpty();
         boolean noCoon = !DataUpdater.isOnline(self);
+        
         if (!(listEmpty && noCoon)) {
 		    showLoadingMessage();
 	        prepareImageThread = new Thread(new PrepareImage());

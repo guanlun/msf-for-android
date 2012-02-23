@@ -6,6 +6,7 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
 
 public class RSSDatabase {
 
@@ -37,7 +38,6 @@ public class RSSDatabase {
 	 * @return an instance of the singleton database
 	 */
 	public static synchronized RSSDatabase getDatabaseInstance(Context mContext) {
-		
 		if(instance == null) {
 			instance = new RSSDatabase(mContext);
 		}
@@ -65,28 +65,7 @@ public class RSSDatabase {
 	}
 	
 	/**
-	 * Set the visited field of the entry as "true"
-	 * @param the specified entry to be changed to "read"
-	 */
-	public void setEntryAsVisited(RSSEntry entry) {
-		
-		String whereClause = RSSDatabaseHelper.KEY_DATA_URL + " = ?";
-		String [] whereArgs = {entry.url};
-		
-		ContentValues cv = new ContentValues();
-		cv.put(RSSDatabaseHelper.KEY_ENTRY_TYPE, entry.entry_type);
-		cv.put(RSSDatabaseHelper.KEY_TITLE, entry.title);
-		cv.put(RSSDatabaseHelper.KEY_CONTENT, entry.content);
-		cv.put(RSSDatabaseHelper.KEY_DATE, entry.date);
-		cv.put(RSSDatabaseHelper.KEY_DATA_URL, entry.url);
-		cv.put(RSSDatabaseHelper.KEY_OTHER_INFO, entry.otherInfo);
-		cv.put(RSSDatabaseHelper.KEY_IMAGE, entry.image);
-		
-		sqliteDB.update(RSSDatabaseHelper.KEY_TABLE_NAME, cv, whereClause, whereArgs);
-	}
-	
-	/**
-	 * update all the ArrayLists that stores the data
+	 * update all the ArrayLists that store the data
 	 */
 	public void refreshAllEntryLists() {
 		refreshEntryList(RSSDatabaseHelper.NEWS);
@@ -214,25 +193,6 @@ public class RSSDatabase {
 	 */
 	public void close() {
 		mDbHelper.close();
-	}
-	
-	/**
-	 * Get the size of the specified type of entry
-	 * @param entryType the specified type of entry
-	 * @return number of entries
-	 */
-	public int getListSize(String entryType) {
-		if(entryType.equals(RSSDatabaseHelper.NEWS)) {
-			return 10;
-		} else if(entryType.equals(RSSDatabaseHelper.BLOG)) {
-			return 10;
-		} else if(entryType.equals(RSSDatabaseHelper.IMAGE)) {
-			return 10;
-		} else if(entryType.equals(RSSDatabaseHelper.VIDEO)) {
-			return 10;
-		} else {
-			return 0;
-		}
 	}
 }
 
