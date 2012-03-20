@@ -33,15 +33,7 @@
 			android:id = "@+id/video_date"
 			android:layout_width = "fill_parent"
 			android:layout_height = "wrap_content"
-			android:textColor = "#ee0000"
+			android:textColor = "#000000"
 			android:textSize = "6pt"/>
 	</LinearLayout>
-	<ImageView
-		android:id = "@+id/videoVisited"
-		android:layout_width = "15sp"
-		android:layout_height = "15sp"
-		android:scaleType="fitCenter"
-  		android:layout_centerVertical="true"
-  		android:layout_alignParentRight="true"
-  		android:src = "@drawable/arrow"/>
 </RelativeLayout>

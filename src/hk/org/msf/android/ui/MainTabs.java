@@ -48,6 +48,7 @@ public class MainTabs extends TabActivity implements OnTabChangeListener {
 	    
 	    mainTitle = (TextView) this.findViewById(R.id.MainTitle);
 	    
+	    /*
 	    backButton = (ImageButton) this.findViewById(R.id.BackButton);
 	    backButton.getBackground().setAlpha(0);
         backButton.setOnClickListener(new OnClickListener() {
@@ -91,6 +92,7 @@ public class MainTabs extends TabActivity implements OnTabChangeListener {
 				}
 			}
         });
+        */
 	    
 	    mainTab = this.getTabHost();
 	    this.buildTabs();
@@ -156,6 +158,7 @@ public class MainTabs extends TabActivity implements OnTabChangeListener {
 	 * Called when the menu is shown on the screen
 	 * Different from onCreateOptionsMenu because that is only called when menu is shown for the first time
 	 */
+    /*
 	@Override
 	public boolean onPrepareOptionsMenu(Menu menu) {
 		menu.clear();
@@ -163,6 +166,7 @@ public class MainTabs extends TabActivity implements OnTabChangeListener {
 		inflater.inflate(R.menu.options_menu, menu);
 		return true;
 	}
+	*/
 	
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {

@@ -169,7 +169,7 @@ public class NewsList extends Activity implements OnItemClickListener, OnItemLon
 	 */
 	private Handler newsHandler = new Handler() {
 		public void handleMessage(Message msg) {
-			createFooterView();
+			// createFooterView();
 	        newsList.setAdapter(adapter);
 			progress.dismiss();
 		}
@@ -187,6 +187,7 @@ public class NewsList extends Activity implements OnItemClickListener, OnItemLon
 	/**
 	 * Create the footer that shows "more" at the bottom of the list view
 	 */
+	/*
 	private void createFooterView() {
     	
 		moreNews = new TextView(this);
@@ -198,9 +199,6 @@ public class NewsList extends Activity implements OnItemClickListener, OnItemLon
 		moreNews.setPadding(0, 6, 0, 6);
 		moreNews.setBackgroundColor(Color.rgb(150, 150, 150));
 
-		/**
-		 * When the moreNews button is clicked
-		 */
 		moreNews.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
@@ -246,6 +244,7 @@ public class NewsList extends Activity implements OnItemClickListener, OnItemLon
 		});
 		newsList.addFooterView(moreNews);
 	}
+	*/
 
     private class NewsAdapter extends BaseAdapter {
     	
@@ -311,18 +310,18 @@ public class NewsList extends Activity implements OnItemClickListener, OnItemLon
 					Bitmap bmp = imageHash.get(newsEntryList.get(mapNewsToImage(position)).url);
 					if(bmp != null) {
 						iv.setImageBitmap(bmp);
+						/*
 						ll.setLayoutParams(new RelativeLayout.LayoutParams(
 								(int)(screenWidth * 0.55), RelativeLayout.LayoutParams.WRAP_CONTENT));
                         RelativeLayout.LayoutParams lp = new RelativeLayout.LayoutParams(
                         		90, (int)(bmp.getHeight() * 90 / bmp.getWidth()));
                         lp.addRule(RelativeLayout.RIGHT_OF, R.id.news_text_layout);
 						iv.setLayoutParams(lp);
+						*/
 					} else {
 						iv.setLayoutParams(new RelativeLayout.LayoutParams(0, 0));
 					}
 			    }
-			} else { // if no image is attached
-				iv.setLayoutParams(new RelativeLayout.LayoutParams(0, 0));
 			}
 			return v;
 		}
@@ -435,9 +434,12 @@ public class NewsList extends Activity implements OnItemClickListener, OnItemLon
                  return true;
              }
         });
-        webView.setInitialScale(150);
+        webView.setInitialScale(120);
         webView.loadDataWithBaseURL("http://www.msf.org.hk/", 
-                newsEntryList.get(position).content, "text/html", "UTF-8", null);
+                "<h2><font color=\"#EE0000\">" + newsEntryList.get(position).title + "</font></h2>"
+                + "<p>" + newsEntryList.get(position).date + "</p>"
+                + newsEntryList.get(position).content, 
+                "text/html", "UTF-8", null);
         
         newsFlipper.addView(webView);
         newsFlipper.showNext();
@@ -470,10 +472,13 @@ public class NewsList extends Activity implements OnItemClickListener, OnItemLon
 				newsFlipper.removeViewAt(1);
 			}
 		} else {
-			NewsList.self.finish();
+			// NewsList.self.finish();
+			super.onBackPressed();
+			this.overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
 		}
 	}
 
+	/*
 	@Override
 	public boolean onPrepareOptionsMenu(Menu menu) {
 		if (newsFlipper.getChildCount() == 1) { // in the list view
@@ -487,6 +492,7 @@ public class NewsList extends Activity implements OnItemClickListener, OnItemLon
 		}
 		return true;
 	}
+	*/
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {

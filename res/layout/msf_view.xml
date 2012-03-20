@@ -1,62 +1,85 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout 
+<RelativeLayout 
 	xmlns:android="http://schemas.android.com/apk/res/android"
-	android:orientation="vertical"
 	android:layout_width="fill_parent"
 	android:layout_height="fill_parent"
-	android:gravity="center"
+    android:orientation="vertical"
 	android:background="#ffffff">
 	
     <ImageView
 		android:id="@+id/msf_view_image"
+    	android:layout_width="300dp"
+    	android:layout_height="110dp"
+    	android:scaleType="fitXY"
+    	android:layout_centerHorizontal="true"
+    	android:paddingTop="15dp"
+    	android:paddingBottom="5dp"/>
+    
+    <LinearLayout
+        android:id="@+id/msf_view_link_layout"
+        android:orientation="vertical"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/msf_view_image"
+        android:layout_marginTop="30dp"
+        android:gravity="center">
+        
+	    <TextView
+	        android:id="@+id/msf_view_about_us"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_marginBottom="15dp"
+	        android:text="@string/about_us"
+	        android:textColor="#000000"
+	        android:textStyle="bold"
+	        android:textSize="10pt" />
+	        
+	    <TextView 
+	        android:id="@+id/msf_view_donate"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+			android:layout_marginBottom="15dp"
+	        android:text="@string/donate"
+	        android:textColor="#000000"
+	        android:textStyle="bold"
+	        android:textSize="10pt" />
+	    
+	    <TextView 
+	        android:id="@+id/msf_view_work_with_us"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+			android:layout_marginBottom="15dp"
+	        android:text="@string/work_with_us"
+	        android:textColor="#000000"
+	        android:textStyle="bold"
+	        android:textSize="10pt" />
+	        
+	    <TextView 
+	        android:id="@+id/msf_view_contact_us"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+			android:layout_marginBottom="15dp"
+	        android:text="@string/contact_us_title"
+	        android:textColor="#000000"
+	        android:textStyle="bold"
+	        android:textSize="10pt" />
+	    
+	    <TextView 
+	        android:id="@+id/msf_view_about_app"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:text="@string/about_app"
+	        android:textColor="#000000"
+	        android:textStyle="bold"
+	        android:textSize="10pt" />
+	    
+	</LinearLayout>
+	
+	<ImageView
 		android:layout_width="fill_parent"
-		android:layout_height="150dp"
-		android:paddingLeft="10dp"
-		android:paddingRight="10dp" 
-		android:layout_marginBottom="30dp"
-		android:layout_marginTop="-20dp"/>
-    
-    <Button 
-        android:id="@+id/msf_view_about_us"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="40dp"
-		android:layout_marginRight="40dp"
-		android:layout_marginBottom="20dp"
-        android:text="@string/about_us"
-        android:textSize="8pt"
-        android:textStyle="italic" />    
-        
-    <Button 
-        android:id="@+id/msf_view_donate"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="40dp"
-		android:layout_marginRight="40dp"
-		android:layout_marginBottom="20dp"
-        android:text="@string/donate"
-        android:textSize="8pt"
-        android:textStyle="italic" />
-    
-    <Button 
-        android:id="@+id/msf_view_work_with_us"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="40dp"
-		android:layout_marginRight="40dp"
-		android:layout_marginBottom="20dp"
-        android:text="@string/work_with_us"
-        android:textSize="8pt"
-        android:textStyle="italic" />    
-        
-    <Button 
-        android:id="@+id/msf_view_website"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="40dp"
-		android:layout_marginRight="40dp"
-        android:text="@string/website_button"
-        android:textSize="8pt"
-        android:textStyle="italic" />    
-        
-</LinearLayout>
+		android:layout_height="40dp"
+		android:scaleType="fitXY"
+		android:layout_alignParentBottom="true"
+		android:src="@drawable/main_menu_bottom" />
+	
+</RelativeLayout>

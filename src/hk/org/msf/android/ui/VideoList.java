@@ -46,7 +46,7 @@ public class VideoList extends Activity implements OnItemClickListener {
 	private ViewFlipper videoFlipper;
 	private ListView videoList;
 	private WebView webView;
-	private TextView moreVideos;
+	// private TextView moreVideos;
 	
 	public static ArrayList<RSSEntry> videoEntryList;
 
@@ -132,6 +132,7 @@ public class VideoList extends Activity implements OnItemClickListener {
 		}
 	}
 
+	/*
 	private void createFooterView() {
 		
 		moreVideos = new TextView(this);
@@ -192,6 +193,7 @@ public class VideoList extends Activity implements OnItemClickListener {
 		});
 	    videoList.addFooterView(moreVideos);
 	}
+	*/
 	
 	/**
 	 * Add an image to the ArrayList of bitmaps
@@ -205,7 +207,7 @@ public class VideoList extends Activity implements OnItemClickListener {
 	
 	private Handler videoHandler = new Handler() {
 		public void handleMessage(Message msg) {
-			createFooterView();
+			// createFooterView();
 			videoList.setAdapter(adapter);
 			progress.dismiss();
 		}
@@ -301,7 +303,7 @@ public class VideoList extends Activity implements OnItemClickListener {
 	 * Refresh the list to show the most up-to-date entries:
 	 */
 	public void refreshList() {
-		videoList.removeFooterView(moreVideos);
+		// videoList.removeFooterView(moreVideos);
 		showLoadingMessage();
 		waitForDatabaseReady();
 		prepareImageThread = new Thread(new PrepareImage());

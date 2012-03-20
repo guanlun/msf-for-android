@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">無國界醫生︰前線隨身</string>
+    <string name="app_name">MSF for Android</string>
     
     <!-- urls -->
     <string name="msf_newsurl">http://www.msf.org.hk/index.php?rss=yes&amp;lang=tc</string>
@@ -20,8 +20,6 @@
 	<string name="go_back">返回</string>
 	<string name="refresh">刷新</string>
 	<string name="exit">退出</string>
-	<string name="about_app">無國界醫生Android應用</string>
-	<string name="about_app_content">香港科技大學\n計算機科學及工程學系</string>
 	<string name="click_for_more">更多...</string>
 	<string name="loading">載入中...</string>
 	<string name="open_view">打開</string>
@@ -52,6 +50,8 @@
 	<string name="work_with_us_button_text">關於參與前線救援</string>
 	<string name="website">主頁</string>
 	<string name="website_button">前往主頁</string>
+	<string name="about_app">關於本應用程式</string>
+	<string name="about_app_content">本應用程式由香港科技大學開發及支援</string>
 	<string name="donate_url">https://ssl.msf.org.hk/edonation/common/landing.js</string>
 	<string name="work_with_us_url">http://m.msf.org.hk/tc/work.php</string>
 	<string name="homepage_url">http://m.msf.org.hk/tc/index.php</string>

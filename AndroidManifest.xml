@@ -35,6 +35,10 @@
         
         <activity android:name=".ui.WorkWithUsView" android:screenOrientation="portrait"></activity>
         
+        <activity android:name=".ui.ContactUsView" android:screenOrientation="portrait"></activity>
+        
+        <activity android:name=".ui.AboutAppView" android:screenOrientation="portrait"></activity>
+        
         <activity android:name=".ui.MainMenu" android:screenOrientation="portrait"></activity>
         
 		<activity android:name=".ui.ImageGrid" android:screenOrientation="portrait"></activity>

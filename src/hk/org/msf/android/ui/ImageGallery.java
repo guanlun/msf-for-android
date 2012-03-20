@@ -113,6 +113,7 @@ public class ImageGallery extends Activity {
 		}
 	}
 	
+	/*
 	@Override
 	public boolean onPrepareOptionsMenu(Menu menu) {
 		menu.clear();
@@ -120,6 +121,7 @@ public class ImageGallery extends Activity {
 		inflater.inflate(R.menu.share_menu, menu);
 		return true;
 	}
+	*/
 	
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {

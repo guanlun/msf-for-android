@@ -57,7 +57,7 @@ public class BlogList extends Activity implements OnItemClickListener, OnItemLon
     private ListView blogList;
     private WebView webView;
     private ViewFlipper blogFlipper;
-    private TextView moreBlogs;
+    // private TextView moreBlogs;
     
     private ProgressDialog progress;
     
@@ -151,7 +151,7 @@ public class BlogList extends Activity implements OnItemClickListener, OnItemLon
     
     private Handler blogHandler = new Handler() {
         public void handleMessage(Message msg) {
-            createFooterView();
+            // createFooterView();
 	        blogList.setAdapter(adapter);
 			progress.dismiss();
         }
@@ -163,6 +163,7 @@ public class BlogList extends Activity implements OnItemClickListener, OnItemLon
 	    }
 	};
     
+	/*
     private void createFooterView() {
         moreBlogs = new TextView(this);
         moreBlogs.setText(getApplicationContext().getResources().getString(R.string.click_for_more));
@@ -218,6 +219,7 @@ public class BlogList extends Activity implements OnItemClickListener, OnItemLon
         });
         blogList.addFooterView(moreBlogs);
     }
+    */
     
     private class BlogAdapter extends BaseAdapter {
         
@@ -282,18 +284,20 @@ public class BlogList extends Activity implements OnItemClickListener, OnItemLon
 					Bitmap bmp = imageHash.get(blogEntryList.get(mapBlogToImage(position)).url);
                     if (bmp != null) {
     			        iv.setImageBitmap(bmp);
+    			        /*
 						ll.setLayoutParams(new RelativeLayout.LayoutParams(
 								(int)(screenWidth * 0.55), RelativeLayout.LayoutParams.WRAP_CONTENT));
                         RelativeLayout.LayoutParams lp = new RelativeLayout.LayoutParams(
                         		90, (int)(bmp.getHeight() * 90 / bmp.getWidth()));
                         lp.addRule(RelativeLayout.RIGHT_OF, R.id.blog_text_layout);
 						iv.setLayoutParams(lp);
+						*/
                     } else {
 						iv.setLayoutParams(new RelativeLayout.LayoutParams(0, 0));
                     }
 				}
             } else {
-				iv.setLayoutParams(new RelativeLayout.LayoutParams(0, 0));
+				// iv.setLayoutParams(new RelativeLayout.LayoutParams(0, 0));
             }
             return v;
         }
@@ -412,9 +416,12 @@ public class BlogList extends Activity implements OnItemClickListener, OnItemLon
              }
         });
         
-        webView.setInitialScale(150);
+        webView.setInitialScale(120);
         webView.loadDataWithBaseURL("http://www.msf.org.hk/", 
-                blogEntryList.get(position).content, "text/html", "UTF-8", null);
+        		"<h2><font color=\"#EE0000\">" + blogEntryList.get(position).title + "</font></h2>"
+                + "<p>" + blogEntryList.get(position).otherInfo + "</p>"
+                + blogEntryList.get(position).content, 
+                "text/html", "UTF-8", null);
         
         blogFlipper.addView(webView);
         blogFlipper.showNext();
@@ -438,7 +445,7 @@ public class BlogList extends Activity implements OnItemClickListener, OnItemLon
      */
     public void refreshList() {
     	if (!prepareImageThread.isAlive()) {
-	    	blogList.removeFooterView(moreBlogs);
+	    	// blogList.removeFooterView(moreBlogs);
 			showLoadingMessage();
 	        waitForDatabaseReady();
 	        prepareImageThread = new Thread(new PrepareImage());
@@ -459,6 +466,7 @@ public class BlogList extends Activity implements OnItemClickListener, OnItemLon
         }
     }
     
+    /*
 	@Override
 	public boolean onPrepareOptionsMenu(Menu menu) {
 		if (blogFlipper.getChildCount() == 1) { // in the list view
@@ -493,4 +501,5 @@ public class BlogList extends Activity implements OnItemClickListener, OnItemLon
 			return super.onOptionsItemSelected(item);
 		}
 	}
+	*/
 }

@@ -22,4 +22,5 @@ public class Preferences extends PreferenceActivity {
     	Intent intent = new Intent(Preferences.this, SplashScreen.class);
     	startActivity(intent);
     }
+    
 }

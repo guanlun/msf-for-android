@@ -12,8 +12,9 @@
 		<RelativeLayout
 			android:layout_width="fill_parent"
 			android:layout_height="45dip"
-			android:background="@drawable/title_background">
+			android:background="#000000">
 			<ImageView
+			    android:id="@+id/tabs_msf_logo"
 				android:layout_width="43dp"
 				android:layout_height="43dp"
 				android:scaleType="fitXY"
@@ -26,25 +27,86 @@
 				android:textColor="#ffffffff"
 				android:layout_width="wrap_content"
 				android:layout_height="wrap_content"
-				android:layout_centerInParent="true"
+				android:layout_toRightOf="@+id/tabs_msf_logo"
 				android:layout_marginTop="8dp"
+				android:layout_marginLeft="8dp"
 				android:maxLines="1" />
-			<ImageButton
-				android:id="@+id/refresh_button"
-				android:layout_width="wrap_content"
-				android:layout_height="30dip"
-				android:layout_alignParentRight="true"
-				android:layout_marginTop="8dp"
-				android:src="@drawable/refresh_btn"/>
-			<ImageButton
-				android:id="@+id/BackButton"
-				android:layout_width="wrap_content"
-				android:layout_height="30dip"
-				android:layout_toLeftOf="@+id/refresh_button"
-				android:layout_marginTop="8dp"
-				android:layout_marginRight="-10dp"
-				android:src="@drawable/back_btn"/>
+
 		</RelativeLayout>
+		
+		<RelativeLayout
+		    android:id="@+id/tabs_bar_layout"
+		    android:layout_width="fill_parent"
+		    android:layout_height="wrap_content"
+		    android:gravity="right"
+		    android:background="#EE0000"
+		    android:paddingTop="5dp"
+		    android:paddingBottom="5dp"
+		    android:paddingRight="10dp">
+			
+		    <ImageView 
+		        android:id="@+id/tabs_bar_share_button"
+		        android:layout_width="18dp"
+		        android:layout_height="18dp"
+		        android:scaleType="fitXY"
+		        android:src="@drawable/share" />
+		    
+		    <ImageView
+		        android:id="@+id/tabs_delimeter_1"
+		        android:layout_width="wrap_content"
+		        android:layout_height="wrap_content"
+		        android:layout_toRightOf="@+id/tabs_bar_share_button"
+		        android:layout_centerVertical="true"
+		        android:layout_marginLeft="8dp"
+		        android:layout_marginRight="8dp"
+		        android:src="@drawable/delimeter" />
+		    
+		    <ImageView 
+		        android:id="@+id/tabs_bar_refresh_button"
+		        android:layout_width="18dp"
+		        android:layout_height="18dp"
+		        android:scaleType="fitXY"
+		        android:layout_toRightOf="@+id/tabs_delimeter_1"
+		        android:src="@drawable/refresh" />
+		    
+		    <ImageView
+		        android:id="@+id/tabs_delimeter_2"
+		        android:layout_width="wrap_content"
+		        android:layout_height="wrap_content"
+		        android:layout_toRightOf="@+id/tabs_bar_refresh_button"
+		        android:layout_centerVertical="true"
+		        android:layout_marginLeft="8dp"
+		        android:layout_marginRight="8dp"
+		        android:src="@drawable/delimeter" />
+		    
+		    <ImageView 
+		        android:id="@+id/tabs_bar_home_button"
+		        android:layout_width="18dp"
+		        android:layout_height="18dp"
+		        android:scaleType="fitXY"
+		        android:layout_toRightOf="@+id/tabs_delimeter_2"
+		        android:src="@drawable/home" />
+		    
+		    <ImageView
+		        android:id="@+id/tabs_delimeter_3"
+		        android:layout_width="wrap_content"
+		        android:layout_height="wrap_content"
+		        android:layout_toRightOf="@+id/tabs_bar_home_button"
+		        android:layout_centerVertical="true"
+		        android:layout_marginLeft="8dp"
+		        android:layout_marginRight="8dp"
+		        android:src="@drawable/delimeter" />
+		    
+		    <ImageView 
+		        android:id="@+id/tabs_bar_settings_button"
+		        android:layout_width="18dp"
+		        android:layout_height="18dp"
+		        android:scaleType="fitXY"
+		        android:layout_toRightOf="@+id/tabs_delimeter_3"
+		        android:src="@drawable/settings" />
+		    
+		</RelativeLayout>
+		
         <FrameLayout
             android:id="@android:id/tabcontent"
             android:layout_width="fill_parent"
@@ -54,6 +116,6 @@
 			android:id="@android:id/tabs"
 			android:layout_width="fill_parent"
 			android:layout_height="wrap_content"
-			android:background="@drawable/tab_button_background_unclicked" />
+			android:background="#000000" />
 	</LinearLayout>
 </TabHost>

@@ -30,6 +30,8 @@ public class MainMenu extends Activity implements OnItemClickListener {
     private String [] menuTypes;
     private int [] menuImages;
     
+    private Activity self;
+    
     /**
      * Called only when the application is started:
      */
@@ -37,6 +39,8 @@ public class MainMenu extends Activity implements OnItemClickListener {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         this.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        self = this;
+        
     }
     
     /**
@@ -46,6 +50,7 @@ public class MainMenu extends Activity implements OnItemClickListener {
     public void onResume() {
     
         super.onResume();
+        
         updateApplicationLanguage();
         
         setContentView(R.layout.main_menu);        
@@ -146,6 +151,7 @@ public class MainMenu extends Activity implements OnItemClickListener {
      * Called when the menu is shown on the screen
      * Different from onCreateOptionsMenu because that is only called when menu is shown for the first time
      */
+    /*
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
         menu.clear();
@@ -153,6 +159,7 @@ public class MainMenu extends Activity implements OnItemClickListener {
         inflater.inflate(R.menu.options_menu, menu);
         return true;
     }
+    */
     
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -203,8 +210,10 @@ public class MainMenu extends Activity implements OnItemClickListener {
             this.startActivity(i);
             break;
         case 5:
-            this.openOptionsMenu();
+            i = new Intent(MainMenu.this, Preferences.class);
+            startActivity(i);
             break;
         }
+        self.overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
     }
 }

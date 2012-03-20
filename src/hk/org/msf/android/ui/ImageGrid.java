@@ -49,7 +49,7 @@ public class ImageGrid extends Activity implements OnItemClickListener, OnItemLo
 	private RelativeLayout imageGridLayout;
 	private GridView imageGridView;
 	private WebView webView;
-	private Button moreImages;
+	// private Button moreImages;
 	
 	private static ArrayList<RSSEntry> imageEntryList;
 	
@@ -78,6 +78,7 @@ public class ImageGrid extends Activity implements OnItemClickListener, OnItemLo
 		
 		imageGridLayout = (RelativeLayout)findViewById(R.id.image_grid_layout);
 		
+		/*
 		moreImages = (Button)findViewById(R.id.more_images);
 		moreImages.setVisibility(View.INVISIBLE);
 		moreImages.setPadding(0, 6, 0, 6);
@@ -125,6 +126,7 @@ public class ImageGrid extends Activity implements OnItemClickListener, OnItemLo
 		        });
 			}
 		});
+		*/
 		
 		imageGridView = (GridView)findViewById(R.id.image_gridview);
 		imageGridView.setOnItemClickListener(this);
@@ -319,7 +321,7 @@ public class ImageGrid extends Activity implements OnItemClickListener, OnItemLo
 		public void handleMessage(Message msg) {
 			imageGridView.setAdapter(adapter);
 			progress.dismiss();
-			moreImages.setVisibility(View.VISIBLE);
+			// moreImages.setVisibility(View.VISIBLE);
 		}
 	};
 	

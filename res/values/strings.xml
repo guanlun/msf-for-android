@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">MSF Go</string>
+    <string name="app_name">MSF for Android</string>
     
     <!-- urls -->
     <string name="msf_newsurl">http://www.msf.org.hk/index.php?rss=yes&amp;lang=en</string>
@@ -23,8 +23,6 @@
 	<string name="go_back">Back</string>
 	<string name="refresh">Refresh</string>
 	<string name="exit">Quit</string>
-	<string name="about_app">MSF Android App</string>
-	<string name="about_app_content">Department of Computer \nScience and Engineering \nHKUST</string>
 	<string name="click_for_more">More...</string>
 	<string name="loading">Loading...</string>
 	<string name="open_view">Open</string>
@@ -55,6 +53,8 @@
 	<string name="work_with_us_button_text">More about working with us</string>
 	<string name="website">Our website</string>
 	<string name="website_button">Go to our homepage</string>
+	<string name="about_app">About this App</string>
+	<string name="about_app_content">The app is developed and supported by the Hong Kong University of Science and Technology.</string>
 	<string name="donate_url">https://ssl.msf.org.hk/edonation/common/landing.jsp</string>
 	<string name="work_with_us_url">http://m.msf.org.hk/work.php</string>
 	<string name="homepage_url">http://m.msf.org.hk/index.php</string>

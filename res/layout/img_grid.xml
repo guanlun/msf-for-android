@@ -9,14 +9,14 @@
 		android:id="@+id/image_gridview"
 		android:layout_width="fill_parent"
 		android:layout_height="wrap_content"
-		android:layout_marginBottom="40dp"
-		android:columnWidth="100dp"
-		android:numColumns="3"
+		android:columnWidth="150dp"
+		android:numColumns="2"
 		android:verticalSpacing="2dp"
 		android:horizontalSpacing="2dp"
 		android:stretchMode="columnWidth"
 		android:gravity="center"
 		android:listSelector="@drawable/grid_item_selection"/>
+	<!--
 	<Button
 		android:id="@+id/more_images"
 		android:layout_width="fill_parent"
@@ -27,4 +27,5 @@
 		android:text="@string/click_for_more"
 		android:textColor="#ffffff"
 		android:background="#000000"/>
+		-->
 </RelativeLayout>
