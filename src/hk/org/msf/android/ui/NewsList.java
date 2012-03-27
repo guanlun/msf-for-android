@@ -14,26 +14,19 @@ import java.util.Hashtable;
 import android.app.Activity;
 import android.app.Dialog;
 import android.app.ProgressDialog;
-import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Color;
-import android.graphics.Typeface;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
-import android.view.Display;
-import android.view.Gravity;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
-import android.view.WindowManager;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
@@ -288,7 +281,7 @@ public class NewsList extends Activity implements OnItemClickListener, OnItemLon
 		public View getView(int position, View convertView, ViewGroup parent) {
 			View v = inflater.inflate(R.layout.news_item, null);
 
-			LinearLayout ll = (LinearLayout) v.findViewById(R.id.news_text_layout);
+			// LinearLayout ll = (LinearLayout) v.findViewById(R.id.news_text_layout);
 
 			TextView newsTitle = (TextView) v.findViewById(R.id.news_title);
 			newsTitle.setText(XMLParser.teaseTitle(newsEntryList.get(position).title));
@@ -302,8 +295,10 @@ public class NewsList extends Activity implements OnItemClickListener, OnItemLon
 
 			String url = newsEntryList.get(position).image;
 
+			/* needed only when resizing image according to screen resolution
 			Display display = ((WindowManager) getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay();
 			int screenWidth = display.getWidth();
+			*/
 
 			if(url != null) { // if there is an image attached with the piece of news
 				if(imageHash.size() > mapNewsToImage(position)) {
@@ -387,12 +382,29 @@ public class NewsList extends Activity implements OnItemClickListener, OnItemLon
         
         return true;
 	}
+	
+	public void share() {
+		if (newsFlipper.getChildCount() > 1) {
+			self.shareItem(currentPos);
+		} else {
+			self.shareNewsLink();
+		}
+	}
 
 	public void shareItem(int position) {
 		Intent intent = new Intent(Intent.ACTION_SEND);
 		intent.setType("text/plain");
 		intent.putExtra(Intent.EXTRA_SUBJECT, newsEntryList.get(position).title);
 		intent.putExtra(Intent.EXTRA_TEXT, newsEntryList.get(position).url);
+		startActivity(Intent.createChooser(intent, "Share with"));
+	}
+	
+	public void shareNewsLink() {
+		Intent intent = new Intent(Intent.ACTION_SEND);
+		intent.setType("text/plain");
+		intent.putExtra(Intent.EXTRA_SUBJECT, "MSF News");
+		intent.putExtra(Intent.EXTRA_TEXT, 
+				self.getApplicationContext().getResources().getString(R.string.news_share_url));
 		startActivity(Intent.createChooser(intent, "Share with"));
 	}
 

@@ -9,6 +9,10 @@
     <string name="link_news_url">http://www.msf.org.cn/index.php?option=com_content&amp;view=category&amp;id=37&amp;Itemid=38&amp;lang=sc</string>
     <string name="link_blogs_url">http://www.msf.org.hk/blogs/gb/</string>
     <string name="link_images_url">http://www.msf.org.hk/blogs/gb/</string>
+    <string name="news_share_url">http://www.msf.org.cn</string>
+    <string name="blog_share_url">http://www.msf.org.cn/blogs/gb</string>
+    <string name="frontline_vision_share_url">http://www.msf.org.cn/photo/gb</string>
+    <string name="video_share_url">http://u.youku.com/user_show/uid_无国界医生MSF</string>
     
     <!-- menu -->
 	<string name="menu_about">关于Android应用</string>
@@ -33,12 +37,12 @@
 	<string name="charter_short">无国界医生是一个国际的非政府组织，其成员...</string>
 	<string name="click_to_extend">点击展开</string>
 	<string name="charter_content0">无国界医生是一个国际的非政府组织，其成员主要为医生和其他医务人员，也欢迎有助於组织完成自身使命的其他专业人员参与。全体成员同意遵循以下准则：</string>
-	<string name="charter_content1">1. 无国界医生不分种族、宗教、信仰和政治立场，为身处困境的人们以及天灾人祸和武装冲突的受害者提供援助。</string>
-	<string name="charter_content2">2. 无国界医生遵循国际医疗守则，坚持人道援助的权利，恪守中立和不偏不倚的立场，并要求在其行动中不受任何阻挠。</string>
-	<string name="charter_content3">3. 全体成员严格遵循其职业规范，并且完全独立於任何政治、经济和宗教势力之外。</string>
-	<string name="charter_content4">4. 作为志愿者，全体成员深谙执行组织的使命所面临的风险和困难，并且不会要求组织向其本人或受益人作出超乎该组织所能提供的赔偿。</string>
+	<string name="charter_content1">无国界医生不分种族、宗教、信仰和政治立场，为身处困境的人们以及天灾人祸和武装冲突的受害者提供援助。</string>
+	<string name="charter_content2">无国界医生遵循国际医疗守则，坚持人道援助的权利，恪守中立和不偏不倚的立场，并要求在其行动中不受任何阻挠。</string>
+	<string name="charter_content3">全体成员严格遵循其职业规范，并且完全独立於任何政治、经济和宗教势力之外。</string>
+	<string name="charter_content4">作为志愿者，全体成员深谙执行组织的使命所面临的风险和困难，并且不会要求组织向其本人或受益人作出超乎该组织所能提供的赔偿。</string>
 	<string name="contact_us_title">联络我们</string>
-	<string name="contact_us_content">电话: (852) 2959 4229 \n\n电邮: office@msf.org.hk</string>
+	<string name="contact_us_content">电话: (86) 20 8336 708 \n\n电邮: info@msf.org.cn</string>
 	<string name="donate">捐款</string>
 	<string name="donate_content1">无国界医生非常重视救援工作的独立性，确保工作不受任何政治、宗教、或经济因素左右，使我们能够独立和不偏不倚地提供医疗人道救援。因此，我们致力维持大部分的经费来自私人捐款，主要是像你一样的个人捐款者。我们坚持将最少八成捐款用于救援项目上。</string>
 	<string name="donate_content2">你的捐款支持让我们能继续迅速及独立地进行救援，为身处危难中的人民提供医疗援助。你可以透过以下途径，捐款支持无国界医生的救援工作。</string>
@@ -51,8 +55,8 @@
 	<string name="website">主页</string>
 	<string name="website_button">前往主页</string>
 	<string name="about_app">关于本应用程序</string>
-	<string name="about_app_content">本应用程序由香港科技大学开发及支持</string>
-	<string name="donate_url">https://ssl.msf.org.hk/edonation/common/landing.jsp</string>
+	<string name="about_app_content">本应用程序由香港科技大学计算机科学及工程学系开发及支持</string>
+	<string name="donate_url">http://www.msf.org.hk/edonation/gb</string>
 	<string name="work_with_us_url">http://m.msf.org.hk/sc/work.php</string>
 	<string name="homepage_url">http://m.msf.org.hk/sc/index.php</string>
 		

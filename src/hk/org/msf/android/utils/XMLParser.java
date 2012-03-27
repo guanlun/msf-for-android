@@ -30,7 +30,6 @@ import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
 
 import android.content.Context;
-import android.util.Log;
 import android.util.Xml;
 
 /**
@@ -133,7 +132,7 @@ public abstract class XMLParser {
 		expr = xpath.compile("//item/pubDate");
 		nodes = (NodeList) expr.evaluate(doc, XPathConstants.NODESET);
 		for (int i = 0; i < nodes.getLength(); i++) {
-			dateList.add(nodes.item(i).getTextContent());
+			dateList.add(parseDate(nodes.item(i).getTextContent(), RSSDatabaseHelper.NEWS));
 		}
 		
 		expr = xpath.compile("//item/description");

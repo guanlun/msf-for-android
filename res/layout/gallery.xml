@@ -14,11 +14,5 @@
 		    android:id="@+id/gallery_view"
 		    android:layout_width="fill_parent"
 		    android:layout_height="wrap_content"/>
-			<ViewFlipper
-				android:id = "@+id/gallery_flipper"
-				android:layout_width = "fill_parent"
-				android:layout_height = "wrap_content"
-				android:layout_below="@+id/galleryView">
-			</ViewFlipper>
 	</RelativeLayout>
 </RelativeLayout>

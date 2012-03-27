@@ -1,34 +1,47 @@
 package hk.org.msf.android.ui;
 
 import hk.org.msf.android.R;
+import hk.org.msf.android.utils.MySettings;
+import android.app.AlertDialog;
 import android.app.TabActivity;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
+import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TabHost;
+import android.widget.Toast;
 import android.widget.TabHost.OnTabChangeListener;
 import android.widget.TabHost.TabSpec;
 import android.widget.TextView;
 
 public class MainTabs extends TabActivity implements OnTabChangeListener {
-	private ImageButton backButton;
-	private ImageButton refreshButton;
+	
+	private MainTabs self;
+	
 	private TabHost mainTab;
 	private TextView mainTitle;
+	
+	private ImageView shareButton;
+	private ImageView refreshButton;
+	private ImageView homeButton;
+	private ImageView settingButton;
+	
+	private AlertDialog dialog;
 	
 	private String [] tabTitles;
 	
 	private final static int[] tabTitlesDrawable = {
-		R.drawable.icon_news,
-		R.drawable.icon_blog,
-		R.drawable.icon_vision,
-		R.drawable.icon_video
+		R.drawable.menu_news,
+		R.drawable.menu_blog,
+		R.drawable.menu_vision,
+		R.drawable.menu_video
 	};
 	
 	/**
@@ -37,6 +50,9 @@ public class MainTabs extends TabActivity implements OnTabChangeListener {
     @Override
 	public void onCreate(Bundle savedInstanceState) {
 	    super.onCreate(savedInstanceState);
+	    
+	    self = this;
+	    
     	this.setContentView(R.layout.tabs);
     	
 	    tabTitles = new String [] {
@@ -48,31 +64,30 @@ public class MainTabs extends TabActivity implements OnTabChangeListener {
 	    
 	    mainTitle = (TextView) this.findViewById(R.id.MainTitle);
 	    
-	    /*
-	    backButton = (ImageButton) this.findViewById(R.id.BackButton);
-	    backButton.getBackground().setAlpha(0);
-        backButton.setOnClickListener(new OnClickListener() {
+	    shareButton = (ImageView) this.findViewById(R.id.tabs_bar_share_button);
+	    shareButton.setOnClickListener(new OnClickListener() {
+
 			@Override
 			public void onClick(View v) {
 				switch (mainTab.getCurrentTab()) {
 				case 0:
-					NewsList.self.onBackPressed();
+					NewsList.self.share();
 					break;
 				case 1:
-					BlogList.self.onBackPressed();
+					BlogList.self.share();
 					break;
 				case 2:
-					ImageGrid.self.onBackPressed();
+					ImageGrid.self.share();
 					break;
 				case 3:
-					VideoList.self.onBackPressed();
+					VideoList.self.share();
 					break;
 				}
 			}
-        });
-        
-        refreshButton = (ImageButton) this.findViewById(R.id.refresh_button);
-        refreshButton.getBackground().setAlpha(0);
+			
+	    });
+	    
+	    refreshButton = (ImageView) this.findViewById(R.id.tabs_bar_refresh_button);
         refreshButton.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
@@ -91,8 +106,28 @@ public class MainTabs extends TabActivity implements OnTabChangeListener {
 					break;
 				}
 			}
+			
         });
-        */
+	    
+	    homeButton = (ImageView) this.findViewById(R.id.tabs_bar_home_button);
+	    homeButton.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				self.finish();
+			}
+			
+	    });
+	    
+	    settingButton = (ImageView) this.findViewById(R.id.tabs_bar_settings_button);
+	    settingButton.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				self.showLangSelectDialog();
+			}
+			
+	    });
 	    
 	    mainTab = this.getTabHost();
 	    this.buildTabs();
@@ -147,10 +182,12 @@ public class MainTabs extends TabActivity implements OnTabChangeListener {
     private View makeTab(final String Text, int drawable) {
     	LayoutInflater inflater = getLayoutInflater();
     	View view = inflater.inflate(R.layout.tab_button, null);
+    	
+    	ImageView image = (ImageView) view.findViewById(R.id.tabsImage);
+    	image.setImageResource(drawable);
     	TextView tabButton = (TextView) view.findViewById(R.id.tabsText);
     	tabButton.setText(Text);
-    	tabButton.setCompoundDrawablesWithIntrinsicBounds(null, 
-    			getResources().getDrawable(drawable), null, null);
+
     	return view;
     }
     
@@ -185,4 +222,64 @@ public class MainTabs extends TabActivity implements OnTabChangeListener {
             return super.onOptionsItemSelected(item);
         }
 	}
+	
+    private void showLangSelectDialog() {
+		MySettings settings = MySettings.getMySettings();
+		final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(self);
+		
+		settings.configurePrefs(getApplicationContext());
+		final String langPref = settings.getLangPref();
+		
+		int sel = 0;
+		if(langPref.equals(MySettings.ENGLISH)) {
+			sel = 0;
+		} else if(langPref.equals(MySettings.TRADITIONAL_CHINESE)) {
+			sel = 1;
+		} else if(langPref.equals(MySettings.SIMPLIFIED_CHINESE)) {
+			sel = 2;
+		}
+		
+    	final CharSequence [] items = { "English", "繁體中文", "简体中文" };
+    	AlertDialog.Builder builder = new AlertDialog.Builder(self);
+    	builder.setTitle(self.getResources().getString(R.string.language_select));
+    	builder.setSingleChoiceItems(items, sel, new DialogInterface.OnClickListener() {
+			
+			@Override
+			public void onClick(DialogInterface dialog, int pos) {
+				SharedPreferences.Editor editor = prefs.edit();
+				if (pos == 0) {
+					if (!langPref.equals(MySettings.ENGLISH)) {
+						editor.putString("langPref", MySettings.ENGLISH);
+						editor.commit();
+						self.restartApp();
+					}
+				} else if (pos == 1) {
+					if (!langPref.equals(MySettings.TRADITIONAL_CHINESE)) {
+						editor.putString("langPref", MySettings.TRADITIONAL_CHINESE);
+						editor.commit();
+						self.restartApp();
+					}
+				} else if (pos == 2) {
+					if (!langPref.equals(MySettings.SIMPLIFIED_CHINESE)) {
+						editor.putString("langPref", MySettings.SIMPLIFIED_CHINESE);
+						editor.commit();
+						self.restartApp();
+					}
+				}
+			}
+			
+		});
+    	
+    	dialog = builder.create();
+    	dialog.show();
+    }
+    
+    private void restartApp() {
+    	Intent intent = new Intent(self, SplashScreen.class);
+    	self.startActivity(intent);
+    	dialog.dismiss();
+    	self.finish();
+    	MainMenu.finishManiMenu();
+    }
+    
 }

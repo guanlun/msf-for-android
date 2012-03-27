@@ -6,22 +6,32 @@ import hk.org.msf.android.utils.MySettings;
 import java.util.Locale;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.app.Dialog;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.res.Configuration;
+import android.graphics.Color;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.BaseAdapter;
+import android.widget.Button;
 import android.widget.GridView;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class MainMenu extends Activity implements OnItemClickListener {
     
@@ -30,7 +40,9 @@ public class MainMenu extends Activity implements OnItemClickListener {
     private String [] menuTypes;
     private int [] menuImages;
     
-    private Activity self;
+    private static MainMenu self;
+    
+    private AlertDialog dialog;
     
     /**
      * Called only when the application is started:
@@ -210,10 +222,72 @@ public class MainMenu extends Activity implements OnItemClickListener {
             this.startActivity(i);
             break;
         case 5:
-            i = new Intent(MainMenu.this, Preferences.class);
-            startActivity(i);
+        	this.showLangSelectDialog();
             break;
         }
         self.overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
     }
+    
+    private void showLangSelectDialog() {
+		MySettings settings = MySettings.getMySettings();
+		final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(self);
+		
+		settings.configurePrefs(getApplicationContext());
+		final String langPref = settings.getLangPref();
+		
+		int sel = 0;
+		if(langPref.equals(MySettings.ENGLISH)) {
+			sel = 0;
+		} else if(langPref.equals(MySettings.TRADITIONAL_CHINESE)) {
+			sel = 1;
+		} else if(langPref.equals(MySettings.SIMPLIFIED_CHINESE)) {
+			sel = 2;
+		}	
+		
+    	final CharSequence [] items = { "English", "繁體中文", "简体中文" };
+    	AlertDialog.Builder builder = new AlertDialog.Builder(self);
+    	builder.setTitle(self.getResources().getString(R.string.language_select));
+    	builder.setSingleChoiceItems(items, sel, new DialogInterface.OnClickListener() {
+			
+			@Override
+			public void onClick(DialogInterface dialog, int pos) {
+				SharedPreferences.Editor editor = prefs.edit();
+				if (pos == 0) {
+					if (!langPref.equals(MySettings.ENGLISH)) {
+						editor.putString("langPref", MySettings.ENGLISH);
+						editor.commit();
+						self.restartApp();
+					}
+				} else if (pos == 1) {
+					if (!langPref.equals(MySettings.TRADITIONAL_CHINESE)) {
+						editor.putString("langPref", MySettings.TRADITIONAL_CHINESE);
+						editor.commit();
+						self.restartApp();
+					}
+				} else if (pos == 2) {
+					if (!langPref.equals(MySettings.SIMPLIFIED_CHINESE)) {
+						editor.putString("langPref", MySettings.SIMPLIFIED_CHINESE);
+						editor.commit();
+						self.restartApp();
+					}
+				}
+			}
+			
+		});
+    	
+    	dialog = builder.create();
+    	dialog.show();
+    }
+    
+    private void restartApp() {
+    	Intent intent = new Intent(self, SplashScreen.class);
+    	self.startActivity(intent);
+    	dialog.dismiss();
+    	self.finish();
+    }
+    
+    public static void finishManiMenu() {
+    	self.finish();
+    }
+    
 }

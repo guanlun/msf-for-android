@@ -14,25 +14,17 @@ import java.util.Hashtable;
 import android.app.Activity;
 import android.app.Dialog;
 import android.app.ProgressDialog;
-import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Color;
-import android.graphics.Typeface;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.view.Display;
-import android.view.Gravity;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
-import android.view.WindowManager;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
@@ -263,7 +255,7 @@ public class BlogList extends Activity implements OnItemClickListener, OnItemLon
         public View getView(int position, View convertView, ViewGroup parent) {
             View v = inflater.inflate(R.layout.blog_item, null);
             
-            LinearLayout ll = (LinearLayout) v.findViewById(R.id.blog_text_layout);
+            // LinearLayout ll = (LinearLayout) v.findViewById(R.id.blog_text_layout);
             
             TextView blogTitle = (TextView) v.findViewById(R.id.blog_title);
             blogTitle.setText(XMLParser.teaseTitle(blogEntryList.get(position).title));
@@ -276,8 +268,10 @@ public class BlogList extends Activity implements OnItemClickListener, OnItemLon
             
 			String url = blogEntryList.get(position).image;
             
+			/* needed only when resizing image according to screen resolution
 			Display display = ((WindowManager) getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay();
 			int screenWidth = display.getWidth();
+			*/
             
             if (url != null) {
 				if(imageHash.size() > mapBlogToImage(position)) {
@@ -368,11 +362,28 @@ public class BlogList extends Activity implements OnItemClickListener, OnItemLon
         return true;	
     }
     
+    public void share() {
+		if (blogFlipper.getChildCount() > 1) {
+			self.shareItem(currentPos);
+		} else {
+			self.shareBlogLink();
+		}
+    }
+    
 	public void shareItem(int position) {
 		Intent intent = new Intent(Intent.ACTION_SEND);
 		intent.setType("text/plain");
 		intent.putExtra(Intent.EXTRA_SUBJECT, blogEntryList.get(position).title);
 		intent.putExtra(Intent.EXTRA_TEXT, blogEntryList.get(position).url);
+		startActivity(Intent.createChooser(intent, "Share with"));
+	}
+	
+	public void shareBlogLink() {
+		Intent intent = new Intent(Intent.ACTION_SEND);
+		intent.setType("text/plain");
+		intent.putExtra(Intent.EXTRA_SUBJECT, "MSF Blogs");
+		intent.putExtra(Intent.EXTRA_TEXT, 
+				self.getApplicationContext().getResources().getString(R.string.blog_share_url));
 		startActivity(Intent.createChooser(intent, "Share with"));
 	}
     

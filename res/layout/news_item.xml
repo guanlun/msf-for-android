@@ -14,6 +14,7 @@
 		android:layout_width="100dp"
 		android:layout_height="80dp"
 		android:scaleType="fitXY"
+		android:src="@drawable/img_unavailable"
 		android:layout_centerVertical="true"
 		android:layout_alignParentLeft="true"/>
         

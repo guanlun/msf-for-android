@@ -39,7 +39,6 @@
 		    android:layout_height="wrap_content" 
 		    android:padding="10dp"
 		    android:text="@string/about_app_content"
-		    android:textStyle="bold"
 		    android:textColor="#000000"
 		    android:textSize="10pt"/>
 		

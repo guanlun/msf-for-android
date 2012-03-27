@@ -16,20 +16,15 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Color;
-import android.graphics.Typeface;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.view.ViewGroup;
-import android.webkit.WebSettings;
 import android.webkit.WebView;
-import android.webkit.WebViewClient;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.BaseAdapter;
@@ -297,6 +292,15 @@ public class VideoList extends Activity implements OnItemClickListener {
 	@Override
 	public void onBackPressed() {
 		checkState();
+	}
+	
+	public void share() {
+		Intent intent = new Intent(Intent.ACTION_SEND);
+		intent.setType("text/plain");
+		intent.putExtra(Intent.EXTRA_SUBJECT, "MSF Videos");
+		intent.putExtra(Intent.EXTRA_TEXT, 
+				self.getApplicationContext().getResources().getString(R.string.video_share_url));
+		startActivity(Intent.createChooser(intent, "Share with"));
 	}
 	
 	/**

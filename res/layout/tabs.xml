@@ -4,23 +4,27 @@
 	xmlns:android="http://schemas.android.com/apk/res/android"
 	android:layout_width="fill_parent"
 	android:layout_height="fill_parent">
+	
 	<LinearLayout
 		android:orientation="vertical"
 		android:layout_width="fill_parent"
 		android:layout_height="fill_parent"
 		android:background="@color/white">
+		
 		<RelativeLayout
 			android:layout_width="fill_parent"
 			android:layout_height="45dip"
 			android:background="#000000">
+			
 			<ImageView
 			    android:id="@+id/tabs_msf_logo"
-				android:layout_width="43dp"
-				android:layout_height="43dp"
+				android:layout_width="45dp"
+				android:layout_height="35dp"
 				android:scaleType="fitXY"
 				android:layout_marginLeft="5dp"
 				android:layout_centerVertical="true"
-				android:src="@drawable/logo_small"/>
+				android:src="@drawable/logo_no_text"/>
+			
 			<TextView
 				android:id="@+id/MainTitle"
 				android:textSize="23dip"
@@ -46,8 +50,8 @@
 			
 		    <ImageView 
 		        android:id="@+id/tabs_bar_share_button"
-		        android:layout_width="18dp"
-		        android:layout_height="18dp"
+		        android:layout_width="24dp"
+		        android:layout_height="24dp"
 		        android:scaleType="fitXY"
 		        android:src="@drawable/share" />
 		    
@@ -63,8 +67,8 @@
 		    
 		    <ImageView 
 		        android:id="@+id/tabs_bar_refresh_button"
-		        android:layout_width="18dp"
-		        android:layout_height="18dp"
+		        android:layout_width="24dp"
+		        android:layout_height="24dp"
 		        android:scaleType="fitXY"
 		        android:layout_toRightOf="@+id/tabs_delimeter_1"
 		        android:src="@drawable/refresh" />
@@ -81,8 +85,8 @@
 		    
 		    <ImageView 
 		        android:id="@+id/tabs_bar_home_button"
-		        android:layout_width="18dp"
-		        android:layout_height="18dp"
+		        android:layout_width="24dp"
+		        android:layout_height="24dp"
 		        android:scaleType="fitXY"
 		        android:layout_toRightOf="@+id/tabs_delimeter_2"
 		        android:src="@drawable/home" />
@@ -99,8 +103,8 @@
 		    
 		    <ImageView 
 		        android:id="@+id/tabs_bar_settings_button"
-		        android:layout_width="18dp"
-		        android:layout_height="18dp"
+		        android:layout_width="24dp"
+		        android:layout_height="24dp"
 		        android:scaleType="fitXY"
 		        android:layout_toRightOf="@+id/tabs_delimeter_3"
 		        android:src="@drawable/settings" />

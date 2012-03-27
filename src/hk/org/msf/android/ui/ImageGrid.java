@@ -16,7 +16,6 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Color;
-import android.graphics.Typeface;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -25,9 +24,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.view.Window;
-import android.webkit.WebSettings;
 import android.webkit.WebView;
-import android.webkit.WebViewClient;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemLongClickListener;
@@ -39,8 +36,6 @@ import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
-import android.widget.ViewFlipper;
 
 public class ImageGrid extends Activity implements OnItemClickListener, OnItemLongClickListener {
 	
@@ -218,6 +213,15 @@ public class ImageGrid extends Activity implements OnItemClickListener, OnItemLo
         dialog.show();
         
         return true;
+	}
+	
+	public void share() {
+		Intent intent = new Intent(Intent.ACTION_SEND);
+		intent.setType("text/plain");
+		intent.putExtra(Intent.EXTRA_SUBJECT, "MSF Frontline Vision");
+		intent.putExtra(Intent.EXTRA_TEXT, 
+				self.getApplicationContext().getResources().getString(R.string.frontline_vision_share_url));
+		startActivity(Intent.createChooser(intent, "Share with"));
 	}
 	
 	public void shareItem(int position) {

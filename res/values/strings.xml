@@ -12,6 +12,10 @@
     <string name="link_images_url">http://www.msf.org.hk/photo/en</string>
     <string name="youtube_site">http://www.youtube.com/user/MSF?blend=1&amp;ob=5</string>
     <string name="youku_site">http://u.youku.com/user_video/id_UMTQ1NjQ0NTQ0.html</string>
+    <string name="news_share_url">http://www.msf.org.hk/en</string>
+    <string name="blog_share_url">http://www.msf.org.hk/blogs/en</string>
+    <string name="frontline_vision_share_url">http://www.msf.org.hk/photo/en</string>
+    <string name="video_share_url">http://www.youtube.com/msfhk</string>
     
     <!-- menu -->
 	<string name="menu_about">About Android App</string>
@@ -36,10 +40,10 @@
 	<string name="charter_short">Médecins Sans Frontières (MSF) is a private international association. The association...</string>
 	<string name="click_to_extend">Click to extend</string>
 	<string name="charter_content0">Médecins Sans Frontières (MSF) is a private international association. The association is made up mainly of doctors and health sector workers and is also open to all other professions which might help in achieving its aims. All of its members agree to honour the following principles:</string>
-	<string name="charter_content1">1. MSF provides assistance to populations in distress, to victims of natural or man-made disasters and to victims of armed conflict. They do so irrespective of race, religion, creed or political convictions.</string>
-	<string name="charter_content2">2. MSF observes neutrality and impartiality in the name of universal medical ethics and the right to humanitarian assistance and claims full and unhindered freedom in the exercise of its functions.</string>
-	<string name="charter_content3">3. Members undertake to respect their professional code of ethics and to maintain complete independence from all political, economic, or religious powers.</string>
-	<string name="charter_content4">4. As volunteers, members understand the risks and dangers of the missions they carry out and make no claim for themselves or their assigns for any form of compensation other than that which the association might be able to afford them.</string>
+	<string name="charter_content1">MSF provides assistance to populations in distress, to victims of natural or man-made disasters and to victims of armed conflict. They do so irrespective of race, religion, creed or political convictions.</string>
+	<string name="charter_content2">MSF observes neutrality and impartiality in the name of universal medical ethics and the right to humanitarian assistance and claims full and unhindered freedom in the exercise of its functions.</string>
+	<string name="charter_content3">Members undertake to respect their professional code of ethics and to maintain complete independence from all political, economic, or religious powers.</string>
+	<string name="charter_content4">As volunteers, members understand the risks and dangers of the missions they carry out and make no claim for themselves or their assigns for any form of compensation other than that which the association might be able to afford them.</string>
 	<string name="contact_us_title">Contact us</string>
 	<string name="contact_us_content">Tel: (852) 2959 4229 \n\nEmail: office@msf.org.hk</string>
 	<string name="donate">Donate</string>
@@ -54,8 +58,8 @@
 	<string name="website">Our website</string>
 	<string name="website_button">Go to our homepage</string>
 	<string name="about_app">About this App</string>
-	<string name="about_app_content">The app is developed and supported by the Hong Kong University of Science and Technology.</string>
-	<string name="donate_url">https://ssl.msf.org.hk/edonation/common/landing.jsp</string>
+	<string name="about_app_content">The app is developed and supported by the Department of Computer Science and Engineering, Hong Kong University of Science and Technology.</string>
+	<string name="donate_url">http://www.msf.org.hk/edonation/en</string>
 	<string name="work_with_us_url">http://m.msf.org.hk/work.php</string>
 	<string name="homepage_url">http://m.msf.org.hk/index.php</string>
 		
